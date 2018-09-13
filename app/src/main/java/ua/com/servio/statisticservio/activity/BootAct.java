@@ -124,10 +124,10 @@ public class BootAct extends Activity {
                             activityUtils.showMessage(getString(R.string.error_no_data), BootAct.this);
                             return;
                         }
-                        if(!TextUtils.isEmpty(authResult.getError())) {
-                            activityUtils.showMessage(authResult.getError(), BootAct.this);
-                            return;
-                        }
+//                        if(!TextUtils.isEmpty(authResult.getError())) {
+//                            activityUtils.showMessage(authResult.getError(), BootAct.this);
+//                            return;
+//                        }
                         alertQuestion.dismiss();
                         SharedStorage.setString(BootAct.this, SERVER, authResult.getServiceLink());
                         SharedStorage.setString(BootAct.this, LOGIN, loginET.getText().toString());
@@ -160,7 +160,7 @@ public class BootAct extends Activity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogTheme);
         builder.setTitle(getResources().getString(R.string.welcome));
-        final View viewInflated = LayoutInflater.from(this).inflate(R.layout.boot_activity, null);
+        final View viewInflated = LayoutInflater.from(this).inflate(R.layout.activity_boot, null);
 
         loginET = (EditText) viewInflated.findViewById(R.id.login);
 

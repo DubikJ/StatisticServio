@@ -31,6 +31,7 @@
 
         <activity
             android:name=".activity.BasicActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"/>
 
     </application>

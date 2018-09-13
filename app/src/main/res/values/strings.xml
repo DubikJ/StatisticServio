@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StatisticServio</string>
+    <string name="app_name">Servio Statistic</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -8,12 +8,19 @@
     <string name="action_settings">Настройки</string>
     <string name="action_exit">Выход</string>
 
+    <string name="summary_static">Итоговая статистика</string>
+    <string name="sales">Продажи товаров</string>
+    <string name="report_manager">Отчёт менеджера</string>
+    <string name="download_forecast">Прогноз загрузки</string>
+
+    <string name="service">Сервис</string>
+    <string name="hms">HMS</string>
+
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
 
+
     <!--AlertDialog-->
-    <string name="questions_exit_clear">При выходе будут очищены все данные!
-        Вы уверены, что хотите выйти?</string>
     <string name="questions_exit">Вы уверены, что хотите выйти?</string>
     <string name="questions_select_element">Выбрать елемент?</string>
     <string name="questions_title_info">Инфо</string>
@@ -41,5 +48,7 @@
     <string name="select">Выберите</string>
 
     <string name="error_field_required">Эти данные есть обязательными</string>
+
+    <string name="double_press_exit">Пожалуйста, нажмите еще раз НАЗАД, чтоб закрыть приложение</string>
 
 </resources>
