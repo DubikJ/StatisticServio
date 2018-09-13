@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ua.com.servio.statisticservio.BasicActivity"
+    tools:context="ua.com.servio.statisticservio.activity.BasicActivity"
     tools:showIn="@layout/app_bar_basic">
 
     <TextView
