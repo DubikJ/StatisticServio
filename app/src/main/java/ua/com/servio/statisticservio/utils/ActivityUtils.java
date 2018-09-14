@@ -1,6 +1,7 @@
 package ua.com.servio.statisticservio.utils;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -8,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -148,6 +150,26 @@ public class ActivityUtils {
     public interface ListItemClick {
 
         void onItemClik(int item, String text);
+    }
+
+    public void showDatePicket(Context context, int year, int monthOfYear, int dayOfMonth,
+                               final DatePicketSet datePicketSet){
+
+        DatePickerDialog.OnDateSetListener dateDialog = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                datePicketSet.onDateSet(year, monthOfYear, dayOfMonth);
+            }
+        };
+
+        new DatePickerDialog(context, dateDialog, year, monthOfYear, dayOfMonth).show();
+
+
+    }
+
+    public interface DatePicketSet {
+
+        void onDateSet(int year, int monthOfYear, int dayOfMonth);
     }
 
 

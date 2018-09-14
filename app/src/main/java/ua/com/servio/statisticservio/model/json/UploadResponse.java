@@ -311,7 +311,8 @@ public class UploadResponse {
         }
 
         public UploadResponse build() {
-            return new UploadResponse(reportName,
+            return new UploadResponse(
+                    TextUtils.isEmpty(reportName)? "|" : reportName,
                     TextUtils.isEmpty(baseExternalID)? "|" : baseExternalID,
                     TextUtils.isEmpty(organizationID)? "|" : organizationID,
                     dateIn, dateOut,

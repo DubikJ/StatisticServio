@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/margin_ctext_layout"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_ctext_right_layout"
+            android:layout_weight="1"
+            android:background="@color/colorWhite">
+
+            <EditText
+                android:id="@+id/dateStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/date_start"
+                android:inputType="datetime"
+                android:maxLines="1"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_standart"
+                android:drawableRight="@drawable/ic_date"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_ctext_left_layout"
+            android:layout_weight="1"
+            android:background="@color/colorWhite">
+
+            <EditText
+                android:id="@+id/dateEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/date_end"
+                android:inputType="datetime"
+                android:maxLines="1"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_standart"
+                android:drawableRight="@drawable/ic_date"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:padding="@dimen/margin_ctext_bootom_layout"
+        android:layout_marginBottom="@dimen/margin_ctext_layout">
+
+        <TextView
+            android:id="@+id/objectview_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:text="@string/objectview"/>
+
+        <Spinner
+            android:id="@+id/objectview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/objectview_title"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_standart"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_weight="1"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:padding="@dimen/margin_ctext_bootom_layout"
+        android:layout_marginBottom="@dimen/margin_ctext_layout">
+
+        <TextView
+            android:id="@+id/objecttype_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:text="@string/objecttype"/>
+
+        <Spinner
+            android:id="@+id/objecttype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/objecttype_title"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_standart"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_weight="1"/>
+    </RelativeLayout>
+
+</LinearLayout>

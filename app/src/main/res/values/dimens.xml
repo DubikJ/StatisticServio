@@ -16,4 +16,9 @@
     <dimen name="basic_margin_left_list_selection">20dp</dimen>
     <dimen name="basic_margin_top_list_selection">10dp</dimen>
 
+    <!--Filter activity-->
+    <dimen name="margin_ctext_bootom_layout">10dp</dimen>
+    <dimen name="margin_ctext_right_layout">5dp</dimen>
+    <dimen name="margin_ctext_left_layout">5dp</dimen>
+
 </resources>

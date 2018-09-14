@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import ua.com.servio.statisticservio.service.sync.SyncServiceFactory;
 import ua.com.servio.statisticservio.utils.ActivityUtils;
 import ua.com.servio.statisticservio.utils.NetworkUtils;
 
-public class SummaryStaticFragment extends Fragment {
+public class SummaryStaticFragment extends Fragment implements FragmentStartSync{
     private static  final int LAYOUT = R.layout.fragment_summary_static;
 
 
@@ -54,7 +55,8 @@ public class SummaryStaticFragment extends Fragment {
     }
 
 
-    private void startSync(){
+    @Override
+    public void startSync() {
 
         if (!networkUtils.checkEthernet()) {
             activityUtils.showMessage(getString(R.string.error_internet_connecting), getActivity());
@@ -67,23 +69,30 @@ public class SummaryStaticFragment extends Fragment {
                 SyncService.class, getActivity());
 
         Observable observable = syncService.getSummaryStatic(
-                UploadResponse.builder().build());
+                UploadResponse.builder()
+                        .dateIn(((BasicActivity)getActivity()).getDateStart())
+                        .dateOut(((BasicActivity)getActivity()).getDateEnd())
+                        .build());
+
         observable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<DownloadResponse>(){
+                .subscribe(new Observer<DownloadResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
+
                     @Override
                     public void onNext(DownloadResponse downloadResponse) {
                         dialogLoad.cancel();
-                        if(downloadResponse == null) {
+                        if (downloadResponse == null) {
+                            ((BasicActivity)getActivity()).showFilter();
                             activityUtils.showMessage(getString(R.string.error_no_data), getActivity());
                             return;
                         }
-                        if(downloadResponse.getBands().size()==0) {
-                           // activityUtils.showMessage(authResult.getError(), BootAct.this);
+                        if (!TextUtils.isEmpty(downloadResponse.getError())) {
+                            ((BasicActivity)getActivity()).showFilter();
+                             activityUtils.showMessage(downloadResponse.getError(), getActivity());
                             return;
                         }
                     }
@@ -91,6 +100,9 @@ public class SummaryStaticFragment extends Fragment {
                     @Override
                     public void onError(Throwable e) {
                         dialogLoad.cancel();
+
+                        ((BasicActivity)getActivity()).showFilter();
+
                         if (!networkUtils.checkEthernet()) {
                             activityUtils.showMessage(getString(R.string.error_internet_connecting), getActivity());
                             return;
@@ -102,7 +114,6 @@ public class SummaryStaticFragment extends Fragment {
                     public void onComplete() {
                     }
                 });
-
 
 
     }

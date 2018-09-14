@@ -30,6 +30,7 @@
     <string name="questions_answer_cancel">Отменить</string>
     <string name="questions_answer_ok">Ок</string>
     <string name="welcome">"Добро пожаловать!"</string>
+    <string name="questions_answer_form">Сформировать</string>
 
     <!-- Synchronization-->
     <string name="sync_success">Синхронизация успешная.</string>
@@ -50,5 +51,22 @@
     <string name="error_field_required">Эти данные есть обязательными</string>
 
     <string name="double_press_exit">Пожалуйста, нажмите еще раз НАЗАД, чтоб закрыть приложение</string>
+
+    <!-- filter-->
+    <string name="date_start">Дата с</string>
+    <string name="date_end">Дата по</string>
+    <string name="objectview">Просмотр</string>
+    <string name="objecttype">Тип счёта\смены</string>
+    <string name="filter">"Настройки"</string>
+
+    <string name="objectview_0">"Счета"</string>
+    <string name="objectview_1">"Смены"</string>
+
+    <string name="objecttype_0">"Открыт"</string>
+    <string name="objecttype_1">"Закрыт"</string>
+    <string name="objecttype_2">"Все"</string>
+
+    <!-- table-->
+    <string name="table_report_no_data">Нет данных</string>
 
 </resources>

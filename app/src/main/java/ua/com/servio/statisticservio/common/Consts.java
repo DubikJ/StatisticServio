@@ -6,6 +6,7 @@ public final class Consts {
     public final static int CONNECT_TIMEOUT_SECONDS_RETROFIT = 180;
     public final static String CONNECT_SERVER_URL = "http://sms.servio.support:32891";
     public final static String AUTH_PATTERN_URL = "AuthPerson";
+
     public final static String SUMMARY_STATIC_PATTERN_URL = "getSummaryStatic";
 
     public final static String LOGIN = "_login";

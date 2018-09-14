@@ -128,8 +128,11 @@ public class BootAct extends Activity {
 //                            activityUtils.showMessage(authResult.getError(), BootAct.this);
 //                            return;
 //                        }
+
+                        SharedStorage.setString(BootAct.this, SERVER, "http://servio.support:32893");
+
                         alertQuestion.dismiss();
-                        SharedStorage.setString(BootAct.this, SERVER, authResult.getServiceLink());
+                       // SharedStorage.setString(BootAct.this, SERVER, authResult.getServiceLink());
                         SharedStorage.setString(BootAct.this, LOGIN, loginET.getText().toString());
                         SharedStorage.setString(BootAct.this, PASSWORD, passwordET.getText().toString());
 

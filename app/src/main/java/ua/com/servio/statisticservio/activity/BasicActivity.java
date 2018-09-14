@@ -1,26 +1,42 @@
 package ua.com.servio.statisticservio.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import ua.com.servio.statisticservio.R;
 import ua.com.servio.statisticservio.app.StatServApplication;
 import ua.com.servio.statisticservio.fragment.DownloadForecastFragment;
+import ua.com.servio.statisticservio.fragment.FragmentStartSync;
 import ua.com.servio.statisticservio.fragment.ReportManagerFragment;
 import ua.com.servio.statisticservio.fragment.SalesFragment;
 import ua.com.servio.statisticservio.fragment.SummaryStaticFragment;
@@ -45,7 +61,15 @@ public class BasicActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private FragmentManager mFragmentManager;
+    private Fragment selectedFragment;
     private ProgressDialog dialogLoad;
+    private Calendar dateStart = Calendar.getInstance();
+    private Calendar dateEnd = Calendar.getInstance();
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
+    private SimpleDateFormat dateFormatterQuery = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS");
+    private int objectView, objectType;
+    private List<String> listObjectView = new ArrayList<>();
+    private List<String> listObjectType = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +91,7 @@ public class BasicActivity extends AppCompatActivity {
         initToobar();
         initNavigationView();
         initDialogLoad();
+        initParams();
     }
 
     public ActivityUtils getActivityUtils() {
@@ -79,6 +104,29 @@ public class BasicActivity extends AppCompatActivity {
 
     public ProgressDialog getDialogLoad() {
         return dialogLoad;
+    }
+
+    public String getDateStart() {
+        return dateFormatterQuery.format(dateStart.getTime());
+    }
+
+    public String getDateEnd() {
+        return dateFormatterQuery.format(dateEnd.getTime());
+    }
+
+    public String getObjectView() {
+        return String.valueOf(objectView);
+    }
+
+    public String getObjectType() {
+        return String.valueOf(objectType);
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 
     @Override
@@ -114,12 +162,30 @@ public class BasicActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_filter) {
+            showFilter();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void initParams(){
+
+        dateStart.set(Calendar.HOUR_OF_DAY, 0);
+        dateStart.set(Calendar.MINUTE, 0);
+        dateStart.set(Calendar.SECOND, 0);
+
+        dateEnd.set(Calendar.HOUR_OF_DAY, 0);
+        dateEnd.set(Calendar.MINUTE, 0);
+        dateEnd.set(Calendar.SECOND, 0);
+
+        listObjectView.add(getString(R.string.objectview_0));
+        listObjectView.add(getString(R.string.objectview_1));
+
+        listObjectType.add(getString(R.string.objecttype_0));
+        listObjectType.add(getString(R.string.objecttype_1));
+        listObjectType.add(getString(R.string.objecttype_2));
+    }
     private void initToobar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -140,20 +206,28 @@ public class BasicActivity extends AppCompatActivity {
                 FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
                 switch (item.getItemId()) {
                     case R.id.nav_summary_static:
-                        xfragmentTransaction.replace(R.id.containerView, new SummaryStaticFragment()).commit();
+                        selectedFragment = new SummaryStaticFragment();
+                        xfragmentTransaction.replace(R.id.containerView, selectedFragment).commit();
                         getSupportActionBar().setSubtitle(R.string.summary_static);
+                        showFilter();
                         break;
                     case R.id.nav_sales:
-                        xfragmentTransaction.replace(R.id.containerView, new SalesFragment()).commit();
+                        selectedFragment = new SalesFragment();
+                        xfragmentTransaction.replace(R.id.containerView, selectedFragment).commit();
                         getSupportActionBar().setSubtitle(R.string.sales);
+                        showFilter();
                         break;
                     case R.id.nav_report_manager:
-                        xfragmentTransaction.replace(R.id.containerView, new ReportManagerFragment()).commit();
+                        selectedFragment = new ReportManagerFragment();
+                        xfragmentTransaction.replace(R.id.containerView, selectedFragment).commit();
                         getSupportActionBar().setSubtitle(R.string.report_manager);
+                        showFilter();
                         break;
                     case R.id.nav_download_forecast:
-                        xfragmentTransaction.replace(R.id.containerView, new DownloadForecastFragment()).commit();
+                        selectedFragment = new DownloadForecastFragment();
+                        xfragmentTransaction.replace(R.id.containerView, selectedFragment).commit();
                         getSupportActionBar().setSubtitle(R.string.download_forecast);
+                        showFilter();
                         break;
                     case R.id.nav_settings:
 //                        startActivity(new Intent(getBaseContext(), SettingsActivity.class));
@@ -178,6 +252,129 @@ public class BasicActivity extends AppCompatActivity {
         dialogLoad.setIndeterminate(true);
         dialogLoad.setCanceledOnTouchOutside(false);
 
+    }
+
+    public void showFilter(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogTheme);
+        builder.setTitle(getResources().getString(R.string.filter));
+        final View viewInflated = LayoutInflater.from(this).inflate(R.layout.activity_filter, null);
+
+        final EditText dateStartET = (EditText) viewInflated.findViewById(R.id.dateStart);
+        dateStartET.setFocusable(false);
+        dateStartET.setText(dateFormatter.format(dateStart.getTime()));
+        dateStartET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityUtils.showDatePicket(BasicActivity.this,
+                        dateStart.get(Calendar.YEAR),
+                        dateStart.get(Calendar.MONTH),
+                        dateStart.get(Calendar.DAY_OF_MONTH),
+                        new ActivityUtils.DatePicketSet() {
+                            @Override
+                            public void onDateSet(int year, int monthOfYear, int dayOfMonth) {
+                                dateStart.set(Calendar.YEAR, year);
+                                dateStart.set(Calendar.MONTH, monthOfYear);
+                                dateStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                dateStartET.setText(dateFormatter.format(dateStart.getTime()));
+                            }
+                        });
+            }
+        });
+
+        final EditText dateEndET = (EditText) viewInflated.findViewById(R.id.dateEnd);
+        dateEndET.setFocusable(false);
+        dateEndET.setText(dateFormatter.format(dateEnd.getTime()));
+        dateEndET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityUtils.showDatePicket(BasicActivity.this,
+                        dateEnd.get(Calendar.YEAR),
+                        dateEnd.get(Calendar.MONTH),
+                        dateEnd.get(Calendar.DAY_OF_MONTH),
+                        new ActivityUtils.DatePicketSet() {
+                            @Override
+                            public void onDateSet(int year, int monthOfYear, int dayOfMonth) {
+                                dateEnd.set(Calendar.YEAR, year);
+                                dateEnd.set(Calendar.MONTH, monthOfYear);
+                                dateEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                                dateEndET.setText(dateFormatter.format(dateEnd.getTime()));
+                            }
+                        });
+            }
+        });
+
+        Spinner objectViewS = (Spinner) viewInflated.findViewById(R.id.objectview);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.item_with_spinner,listObjectView);
+
+        adapter.setDropDownViewResource(R.layout.item_with_spinner);
+        objectViewS.setAdapter(adapter);
+        objectViewS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                objectView = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        Spinner objectTypeS = (Spinner) viewInflated.findViewById(R.id.objecttype);
+        ArrayAdapter<String> adapterType = new ArrayAdapter<String>(this,
+                R.layout.item_with_spinner,listObjectType);
+
+        adapterType.setDropDownViewResource(R.layout.item_with_spinner);
+        objectTypeS.setAdapter(adapterType);
+        objectTypeS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                objectType = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        builder.setView(viewInflated);
+
+        builder.setPositiveButton(getResources().getString(R.string.questions_answer_form), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.setNegativeButton(getResources().getString(R.string.questions_answer_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        builder.setCancelable(true);
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
+            }
+        });
+        final AlertDialog alertQuestion = builder.create();
+        alertQuestion.show();
+        alertQuestion.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        alertQuestion.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent));
+        alertQuestion.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alertQuestion.dismiss();
+
+                ((FragmentStartSync) selectedFragment).startSync();
+
+            }
+        });
+        alertQuestion.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
     private void logout() {
