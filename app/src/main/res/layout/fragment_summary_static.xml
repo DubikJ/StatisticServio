@@ -6,7 +6,6 @@
               android:background="@color/colorBackground">
 
     <FrameLayout
-        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,7 +15,563 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/table_report_no_data"/>
+            android:text="@string/table_report_no_data"
+            android:visibility="gone"/>
+
+        <ScrollView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/guestcount_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/guestcount_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap1"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/billcount_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/billcount_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap2"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/billopenedcount_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/billopenedcount_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap3"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/billopenedtotal_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/billopenedtotal_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap4"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/sumguest_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/sumguest_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap5"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/billtotalreturn_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/billtotalreturn_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap6"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/billcountreturn_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/billcountreturn_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap7"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/colorBackground">
+                    </View>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/average_sumguest_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/average_sumguest_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap8"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap9"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/average_sumbill_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/average_sumbill_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap9"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/average_guestcount_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/average_guestcount_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap10"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/decreasecount_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/decreasecount_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap11"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/decreasesum_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/decreasesum_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap12"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/tax1_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/tax1_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap13"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/colorBackground">
+                        </View>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/textCap14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_margin="2dp"
+                                android:text="@string/tax2_cap"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                            <TextView
+                                android:id="@+id/tax2_cap"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_below="@+id/textCap14"
+                                android:layout_margin="2dp"
+                                android:text="@string/zero"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"/>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <include
+                    layout="@layout/group_discount_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"/>
+
+                <include
+                    layout="@layout/manual_discount_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"/>
+
+                <include
+                    layout="@layout/payment_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
 
     </FrameLayout>
 

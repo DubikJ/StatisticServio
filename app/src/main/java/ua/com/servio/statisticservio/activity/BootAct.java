@@ -245,7 +245,7 @@ public class BootAct extends Activity {
 
         dialogLoad = new ProgressDialog(this); // this = YourActivity
         dialogLoad.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialogLoad.setMessage("Loading. Please wait...");
+        dialogLoad.setMessage(getString(R.string.loading_title));
         dialogLoad.setIndeterminate(true);
         dialogLoad.setCanceledOnTouchOutside(false);
 

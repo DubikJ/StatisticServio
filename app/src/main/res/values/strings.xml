@@ -33,6 +33,8 @@
     <string name="questions_answer_form">Сформировать</string>
 
     <!-- Synchronization-->
+
+    <string name="loading_title">Загрузка. Подождите...</string>   //  "Loading. Please wait..."
     <string name="sync_success">Синхронизация успешная.</string>
     <string name="sync_error">Ошибка синхронизации.</string>
     <string name="sync_cancel">Отменено синхронизацию.</string>
@@ -68,5 +70,42 @@
 
     <!-- table-->
     <string name="table_report_no_data">Нет данных</string>
+
+    <string name="zero">0</string>
+    <string name="guestcount_cap">Количество гостей</string>
+    <string name="billcount_cap">Счетов за период</string>
+    <string name="billopenedcount_cap">Открытых счетов</string>
+    <string name="billopenedtotal_cap">Сумма откр. счетов</string>
+    <string name="sumguest_cap">Выручка за период</string>
+    <string name="billtotalreturn_cap">Сумма возврата</string>
+    <string name="billcountreturn_cap">Чеков возврата</string>
+
+    <string name="average_sumguest_cap">Сред. сумма по гостю</string>
+    <string name="average_sumbill_cap">Средняя сумма по чеку</string>
+    <string name="average_guestcount_cap">Сред. кол-во гостей</string>
+    <string name="decreasecount_cap">Отказов от блюд</string>
+    <string name="decreasesum_cap">Сумма отказов</string>
+    <string name="tax1_cap">Налог 1</string>
+    <string name="tax2_cap">Налог 2</string>
+
+    <string name="groupdiscountcap">Скидки по группам</string>
+    <string name="groupdiscount">Дисконтная группа</string>
+    <string name="bills">Счетов</string>
+    <string name="discont">Скидка</string>
+    <string name="paid_for">Бонус</string>
+    <string name="total">Итого</string>
+
+    <string name="manualdiscountcap">Ручные скидки</string>
+    <string name="manualdiscountcap_percent">Процент скидки</string>
+    <string name="manualdiscountcap_sum">На сумму</string>
+
+    <string name="paymentcap">По типам оплат</string>
+    <string name="paymenttype_name">Тип оплаты</string>
+    <string name="paymenttype_fiscal">Фиск</string>
+    <string name="paymenttype_accrual">Без скидки</string>
+    <string name="paymenttype_discont">Скидка</string>
+    <string name="paymenttype_payment">Оплачено</string>
+
+
 
 </resources>

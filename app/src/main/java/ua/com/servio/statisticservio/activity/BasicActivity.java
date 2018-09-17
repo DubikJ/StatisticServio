@@ -122,13 +122,6 @@ public class BasicActivity extends AppCompatActivity {
         return String.valueOf(objectType);
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        drawerLayout.openDrawer(GravityCompat.START);
-    }
-
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -248,7 +241,7 @@ public class BasicActivity extends AppCompatActivity {
 
         dialogLoad = new ProgressDialog(this); // this = YourActivity
         dialogLoad.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialogLoad.setMessage("Loading. Please wait...");
+        dialogLoad.setMessage(getString(R.string.loading_title));
         dialogLoad.setIndeterminate(true);
         dialogLoad.setCanceledOnTouchOutside(false);
 

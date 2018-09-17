@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/paymentcap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/paymentcap_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            app:srcCompat="@drawable/ic_arrow_right"
+            tools:ignore="VectorDrawableCompat"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+            android:text="@string/paymentcap"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_standart"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/payment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="2dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryLight"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:text="@string/paymenttype_name"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_standart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.5"
+                android:gravity="right"
+                android:text="@string/paymenttype_fiscal"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_standart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.35"
+                android:gravity="right"
+                android:text="@string/paymenttype_accrual"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_standart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.35"
+                android:gravity="right"
+                android:text="@string/paymenttype_discont"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_standart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.35"
+                android:gravity="right"
+                android:text="@string/paymenttype_payment"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_standart"/>
+
+        </LinearLayout>
+
+        <ua.com.servio.statisticservio.ui.widget.NonScrollListView
+            android:id="@+id/paymentcap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryLight"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:text="@string/total"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_standart"/>
+
+            <TextView
+                android:id="@+id/payment_total_accrual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.5"
+                android:gravity="right"
+                android:text="@string/zero"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_standart"/>
+
+            <TextView
+                android:id="@+id/payment_total_discont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.5"
+                android:gravity="right"
+                android:text="@string/zero"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_standart"/>
+
+            <TextView
+                android:id="@+id/payment_total_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.5"
+                android:gravity="right"
+                android:text="@string/zero"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_standart"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
