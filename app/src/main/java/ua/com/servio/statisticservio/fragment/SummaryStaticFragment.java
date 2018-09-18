@@ -54,6 +54,13 @@ import static ua.com.servio.statisticservio.common.Consts.BAND_NAME_USER;
 public class SummaryStaticFragment extends Fragment implements FragmentStartSync{
     private static  final int LAYOUT = R.layout.fragment_summary_static;
 
+    private static final String SUMMARY_STATIC_FIELDS_KEY = "summary_static_fields_key";
+    private static final String GROUP_DISCOUNT_FIELDS_KEY = "group_discount_fields_key";
+    private static final String MANUAL_DISCOUNT_FIELDS_KEY = "manual_discount_fields_key";
+    private static final String PAYMENT_FIELDS_KEY = "payment_fields_key";
+    private static final String SECTION_FIELDS_KEY = "section_fields_key";
+    private static final String HALL_FIELDS_KEY = "hall_fields_key";
+    private static final String USER_FIELDS_KEY = "user_fields_key";
 
     private ActivityUtils activityUtils;
     private NetworkUtils networkUtils;
@@ -65,6 +72,8 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             sumQuestCap, billTotalReturnCap, billCountReturnCap, averageSumGuestCap,
             averageSumBillCap, averageQuestCountCap, decreaseCountCap, decreaseSumCap,
             tax1Cap, tax2Cap;
+    private List<Field> summaryStaticFields, groupDiscountFields, manualDiscountFields,
+            paymentDiscountFields, sectionDiscountFields, hallDiscountFields, userDiscountFields;
 
     private DecimalFormat precision = new DecimalFormat("#.##");
 
@@ -234,6 +243,89 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
         });
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        if (summaryStaticFields != null) {
+            savedInstanceState.putParcelableArrayList(SUMMARY_STATIC_FIELDS_KEY, new ArrayList<>(summaryStaticFields));
+        }
+        if (groupDiscountFields != null) {
+            savedInstanceState.putParcelableArrayList(GROUP_DISCOUNT_FIELDS_KEY, new ArrayList<>(groupDiscountFields));
+        }
+        if (manualDiscountFields != null) {
+            savedInstanceState.putParcelableArrayList(MANUAL_DISCOUNT_FIELDS_KEY, new ArrayList<>(manualDiscountFields));
+        }
+        if (paymentDiscountFields != null) {
+            savedInstanceState.putParcelableArrayList(PAYMENT_FIELDS_KEY, new ArrayList<>(paymentDiscountFields));
+        }
+        if (sectionDiscountFields != null) {
+            savedInstanceState.putParcelableArrayList(SECTION_FIELDS_KEY, new ArrayList<>(sectionDiscountFields));
+        }
+        if (hallDiscountFields != null) {
+            savedInstanceState.putParcelableArrayList(HALL_FIELDS_KEY, new ArrayList<>(hallDiscountFields));
+        }
+        if (userDiscountFields != null) {
+            savedInstanceState.putParcelableArrayList(USER_FIELDS_KEY, new ArrayList<>(userDiscountFields));
+        }
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(SUMMARY_STATIC_FIELDS_KEY)) {
+                summaryStaticFields = savedInstanceState.<Field>getParcelableArrayList(SUMMARY_STATIC_FIELDS_KEY);
+                initDataToCap(summaryStaticFields);
+                noDataView.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+
+            if (savedInstanceState.containsKey(GROUP_DISCOUNT_FIELDS_KEY)) {
+                groupDiscountFields = savedInstanceState.<Field>getParcelableArrayList(GROUP_DISCOUNT_FIELDS_KEY);
+                initGroupDiscount(groupDiscountFields);
+                noDataView.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+
+            if (savedInstanceState.containsKey(MANUAL_DISCOUNT_FIELDS_KEY)) {
+                manualDiscountFields = savedInstanceState.<Field>getParcelableArrayList(MANUAL_DISCOUNT_FIELDS_KEY);
+                initManualDiscount(manualDiscountFields);
+                noDataView.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+
+            if (savedInstanceState.containsKey(PAYMENT_FIELDS_KEY)) {
+                paymentDiscountFields = savedInstanceState.<Field>getParcelableArrayList(PAYMENT_FIELDS_KEY);
+                initPayment(paymentDiscountFields);
+                noDataView.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+
+            if (savedInstanceState.containsKey(SECTION_FIELDS_KEY)) {
+                sectionDiscountFields = savedInstanceState.<Field>getParcelableArrayList(SECTION_FIELDS_KEY);
+                initSection(sectionDiscountFields);
+                noDataView.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+
+            if (savedInstanceState.containsKey(HALL_FIELDS_KEY)) {
+                hallDiscountFields = savedInstanceState.<Field>getParcelableArrayList(HALL_FIELDS_KEY);
+                initHall(hallDiscountFields);
+                noDataView.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+
+            if (savedInstanceState.containsKey(USER_FIELDS_KEY)) {
+                userDiscountFields = savedInstanceState.<Field>getParcelableArrayList(USER_FIELDS_KEY);
+                initUser(userDiscountFields);
+                noDataView.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+        }
+    }
 
     @Override
     public void startSync() {
@@ -281,29 +373,36 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
                         noDataView.setVisibility(View.GONE);
                         content.setVisibility(View.VISIBLE);
 
-                        List<Band> bands = downloadResponse.getBands();
+                        List <Band> bands = downloadResponse.getBands();
                         for(Band band :bands ) {
                             switch (band.getBandName()) {
                                 case BAND_NAME_SUMMARY:
-                                    initDataToCap(band.getFields());
+                                    summaryStaticFields = band.getFields();
+                                    initDataToCap(summaryStaticFields);
                                     break;
                                 case BAND_NAME_GROUP_DISCOUNT:
-                                    initGroupDiscount(band.getFields());
+                                    groupDiscountFields = band.getFields();
+                                    initGroupDiscount(groupDiscountFields);
                                     break;
                                 case BAND_NAME_MANUAL_DISCOUNT:
-                                    initManualDiscount(band.getFields());
+                                    manualDiscountFields = band.getFields();
+                                    initManualDiscount(manualDiscountFields);
                                     break;
                                 case BAND_NAME_PAYMENT:
-                                    initPayment(band.getFields());
+                                    paymentDiscountFields = band.getFields();
+                                    initPayment(paymentDiscountFields);
                                     break;
                                 case BAND_NAME_SECTION:
-                                    initSection(band.getFields());
+                                    sectionDiscountFields = band.getFields();
+                                    initSection(sectionDiscountFields);
                                     break;
                                 case BAND_NAME_HALL:
-                                    initHall(band.getFields());
+                                    hallDiscountFields = band.getFields();
+                                    initHall(hallDiscountFields);
                                     break;
                                 case BAND_NAME_USER:
-                                    initUser(band.getFields());
+                                    userDiscountFields = band.getFields();
+                                    initUser(userDiscountFields);
                                     break;
                             }
                         }
@@ -639,8 +738,8 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             sumBillItem = sumBillItem + sumBill;
 
             ItemField itemField = new ItemField(field.getBaseExternalName(),
-                    field.getSectionName(),
-                    field.getPaymentFiscalTypeName(),
+                    "",
+                    "",
                     bill,
                     guest,
                     payment,
@@ -735,8 +834,8 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             sumBillItem = sumBillItem + sumBill;
 
             ItemField itemField = new ItemField(field.getBaseExternalName(),
-                    field.getSectionName(),
-                    field.getPaymentFiscalTypeName(),
+                    field.getUserName(),
+                    "",
                     bill,
                     guest,
                     payment,

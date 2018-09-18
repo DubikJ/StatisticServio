@@ -67,6 +67,9 @@
     <string name="objecttype_0">"Открыт"</string>
     <string name="objecttype_1">"Закрыт"</string>
     <string name="objecttype_2">"Все"</string>
+    <string name="compare_period_error">Дата начала должна быть менше даты окончания</string>
+
+    <string name="no_selectedorder">Не выбран отчет</string>
 
     <!-- table-->
     <string name="table_report_no_data">Нет данных</string>

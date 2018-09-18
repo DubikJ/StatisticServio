@@ -24,7 +24,9 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,6 +52,11 @@ import static ua.com.servio.statisticservio.common.Consts.SERVER;
 
 public class BasicActivity extends AppCompatActivity {
 
+    private static final String DATE_START_KEY = "date_start_key";
+    private static final String DATE_END_KEY = "date_end_key";
+    private static final String OBJECTVIEW_KEY = "abjectview_key";
+    private static final String OBJECTTYPE_KEY = "abjecttype_key";
+    private static final String SELECTED_FRAGMENT_KEY = "selected_fragment_key";
     private boolean doubleBackToExitPressedOnce = false;
 
     @Inject
@@ -60,6 +67,8 @@ public class BasicActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
+    private FrameLayout containerView;
+    private TextView noDataView;
     private FragmentManager mFragmentManager;
     private Fragment selectedFragment;
     private ProgressDialog dialogLoad;
@@ -78,15 +87,11 @@ public class BasicActivity extends AppCompatActivity {
         ((StatServApplication) getApplication()).getComponent().inject(this);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        containerView = (FrameLayout) findViewById(R.id.containerView);
+        containerView.setVisibility(View.GONE);
+        noDataView = (TextView) findViewById(R.id.no_selectedorder);
+        noDataView.setVisibility(View.VISIBLE);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
         mFragmentManager = getSupportFragmentManager();
         initToobar();
         initNavigationView();
@@ -231,6 +236,9 @@ public class BasicActivity extends AppCompatActivity {
                         break;
                 }
 
+                noDataView.setVisibility(View.GONE);
+                containerView.setVisibility(View.VISIBLE);
+
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
@@ -248,6 +256,11 @@ public class BasicActivity extends AppCompatActivity {
     }
 
     public void showFilter(){
+
+        if(selectedFragment==null){
+            activityUtils.showMessage(getString(R.string.no_selectedorder), BasicActivity.this);
+            return;
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogTheme);
         builder.setTitle(getResources().getString(R.string.filter));
@@ -361,8 +374,12 @@ public class BasicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                alertQuestion.dismiss();
+                if(dateStart.getTimeInMillis() > dateEnd.getTimeInMillis() ){
+                    activityUtils.showLongToast(BasicActivity.this, getString(R.string.compare_period_error));
+                    return;
+                }
 
+                alertQuestion.dismiss();
                 ((FragmentStartSync) selectedFragment).startSync();
 
             }
@@ -397,6 +414,52 @@ public class BasicActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putLong(DATE_START_KEY, dateStart.getTimeInMillis());
+        savedInstanceState.putLong(DATE_END_KEY, dateEnd.getTimeInMillis());
+        savedInstanceState.putInt(OBJECTVIEW_KEY, objectView);
+        savedInstanceState.putInt(OBJECTTYPE_KEY, objectType);
+
+        if(selectedFragment!=null) {
+            getSupportFragmentManager().putFragment(savedInstanceState,
+                    SELECTED_FRAGMENT_KEY, selectedFragment);
+        }
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState.containsKey(DATE_START_KEY)) {
+            dateStart.setTimeInMillis(savedInstanceState.getLong(DATE_START_KEY));
+        }
+
+        if (savedInstanceState.containsKey(DATE_END_KEY)) {
+            dateEnd.setTimeInMillis(savedInstanceState.getLong(DATE_END_KEY));
+        }
+
+        if (savedInstanceState.containsKey(OBJECTVIEW_KEY)) {
+            objectView = savedInstanceState.getInt(OBJECTVIEW_KEY);
+        }
+
+        if (savedInstanceState.containsKey(OBJECTTYPE_KEY)) {
+            objectType = savedInstanceState.getInt(OBJECTTYPE_KEY);
+        }
+
+        if (savedInstanceState.containsKey(SELECTED_FRAGMENT_KEY)) {
+            selectedFragment = getSupportFragmentManager().getFragment(savedInstanceState,
+                    SELECTED_FRAGMENT_KEY);
+            noDataView.setVisibility(View.GONE);
+            containerView.setVisibility(View.VISIBLE);
+
+        }
+
     }
 
 }

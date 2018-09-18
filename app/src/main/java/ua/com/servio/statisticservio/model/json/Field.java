@@ -1,9 +1,12 @@
 package ua.com.servio.statisticservio.model.json;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Field {
+public class Field implements Parcelable {
 
     @Expose
     @SerializedName("CommonID")
@@ -704,6 +707,197 @@ public class Field {
 
     public String getUserName() {
         return userName;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.commonID);
+        dest.writeString(this.baseExternalID);
+        dest.writeString(this.baseExternalName);
+        dest.writeString(this.organizationID);
+        dest.writeString(this.organizationName);
+        dest.writeString(this.buyerID);
+        dest.writeString(this.buyerName);
+        dest.writeString(this.guestCount );
+        dest.writeString(this.guestCountByBaseExternalID);
+        dest.writeString(this.guestCountByOrganizationID);
+        dest.writeString(this.guestCountSummary);
+        dest.writeString(this.billCount);
+        dest.writeString(this.billCountByBaseExternalID);
+        dest.writeString(this.billCountByOrganizationID);
+        dest.writeString(this.billCountSummary);
+        dest.writeString(this.billBaseTotal);
+        dest.writeString(this.billBaseTotalByBaseExternalID);
+        dest.writeString(this.billBaseTotalByOrganizationID);
+        dest.writeString(this.billBaseTotalSummary);
+        dest.writeString(this.billCountReturn);
+        dest.writeString(this.billCountReturnByBaseExternalID);
+        dest.writeString(this.billCountReturnByOrganizationID);
+        dest.writeString(this.billCountReturnSummary);
+        dest.writeString(this.billTotalReturn);
+        dest.writeString(this.billTotalReturnByBaseExternalID);
+        dest.writeString(this.billTotalReturnByOrganizationID);
+        dest.writeString(this.billTotalReturnSummary);
+        dest.writeString(this.billOpenedCount);
+        dest.writeString(this.billOpenedCountByBaseExternalID);
+        dest.writeString(this.billOpenedCountByOrganizationID);
+        dest.writeString(this.billOpenedCountSummary);
+        dest.writeString(this.billOpenedTotal);
+        dest.writeString(this.billOpenedTotalByBaseExternalID);
+        dest.writeString(this.billOpenedTotalByOrganizationID);
+        dest.writeString(this.billOpenedTotalSummary);
+        dest.writeString(this.sumGuest);
+        dest.writeString(this.sumGuestByBaseExternalID);
+        dest.writeString(this.sumGuestByOrganizationID);
+        dest.writeString(this.sumGuestSummary);
+        dest.writeString(this.sumBill);
+        dest.writeString(this.sumBillByBaseExternalID);
+        dest.writeString(this.sumBillByOrganizationID);
+        dest.writeString(this.sumBillSummary);
+        dest.writeString(this.guestBill);
+        dest.writeString(this.guestBillByBaseExternalID);
+        dest.writeString(this.guestBillByOrganizationID);
+        dest.writeString(this.guestBillSummary);
+        dest.writeString(this.decreaseCount);
+        dest.writeString(this.decreaseCountByBaseExternalID);
+        dest.writeString(this.decreaseCountByOrganizationID);
+        dest.writeString(this.decreaseCountSummary);
+        dest.writeString(this.decreaseSum);
+        dest.writeString(this.decreaseSumByBaseExternalID);
+        dest.writeString(this.decreaseSumByOrganizationID);
+        dest.writeString(this.decreaseSumSummary);
+        dest.writeString(this.tax1);
+        dest.writeString(this.tax1ByBaseExternalID);
+        dest.writeString(this.tax1ByOrganizationID);
+        dest.writeString(this.tax1Summary);
+        dest.writeString(this.tax2);
+        dest.writeString(this.tax2ByBaseExternalID);
+        dest.writeString(this.tax2ByOrganizationID);
+        dest.writeString(this.tax2Summary);
+        dest.writeString(this.orderPrepareTime);
+        dest.writeString(this.billItemCount);
+        dest.writeString(this.aVGPrepareTimeByBaseExternalID);
+        dest.writeString(this.aVGPrepareTimeByOrganizationID);
+        dest.writeString(this.aVGPrepareTimeSummary);
+        dest.writeString(this.discountGroupName);
+        dest.writeString(this.discountSum);
+        dest.writeString(this.bonusSum);
+        dest.writeString(this.discountPercent);
+        dest.writeString(this.paymentTypeName);
+        dest.writeString(this.paymentFiscalTypeName);
+        dest.writeString(this.accrual);
+        dest.writeString(this.discount);
+        dest.writeString(this.payment);
+        dest.writeString(this.sectionName);
+        dest.writeString(this.amount);
+        dest.writeString(this.placeGroupShort);
+        dest.writeString(this.userName);
+    }
+
+    protected Field(Parcel in) {
+        this.commonID = in.readString();
+        this.baseExternalID = in.readString();
+        this.baseExternalName = in.readString();
+        this.organizationID = in.readString();
+        this.organizationName = in.readString();
+        this.buyerID = in.readString();
+        this.buyerName = in.readString();
+        this.guestCount = in.readString();
+        this.guestCountByBaseExternalID = in.readString();
+        this.guestCountByOrganizationID = in.readString();
+        this.guestCountSummary = in.readString();
+        this.billCount = in.readString();
+        this.billCountByBaseExternalID = in.readString();
+        this.billCountByOrganizationID = in.readString();
+        this.billCountSummary = in.readString();
+        this.billBaseTotal = in.readString();
+        this.billBaseTotalByBaseExternalID = in.readString();
+        this.billBaseTotalByOrganizationID = in.readString();
+        this.billBaseTotalSummary = in.readString();
+        this.billCountReturn = in.readString();
+        this.billCountReturnByBaseExternalID = in.readString();
+        this.billCountReturnByOrganizationID = in.readString();
+        this.billCountReturnSummary = in.readString();
+        this.billTotalReturn = in.readString();
+        this.billTotalReturnByBaseExternalID = in.readString();
+        this.billTotalReturnByOrganizationID = in.readString();
+        this.billTotalReturnSummary = in.readString();
+        this.billOpenedCount = in.readString();
+        this.billOpenedCountByBaseExternalID = in.readString();
+        this.billOpenedCountByOrganizationID = in.readString();
+        this.billOpenedCountSummary = in.readString();
+        this.billOpenedTotal = in.readString();
+        this.billOpenedTotalByBaseExternalID = in.readString();
+        this.billOpenedTotalByOrganizationID = in.readString();
+        this.billOpenedTotalSummary = in.readString();
+        this.sumGuest = in.readString();
+        this.sumGuestByBaseExternalID = in.readString();
+        this.sumGuestByOrganizationID = in.readString();
+        this.sumGuestSummary = in.readString();
+        this.sumBill = in.readString();
+        this.sumBillByBaseExternalID = in.readString();
+        this.sumBillByOrganizationID = in.readString();
+        this.sumBillSummary = in.readString();
+        this.guestBill = in.readString();
+        this.guestBillByBaseExternalID = in.readString();
+        this.guestBillByOrganizationID = in.readString();
+        this.guestBillSummary = in.readString();
+        this.decreaseCount = in.readString();
+        this.decreaseCountByBaseExternalID = in.readString();
+        this.decreaseCountByOrganizationID = in.readString();
+        this.decreaseCountSummary = in.readString();
+        this.decreaseSum = in.readString();
+        this.decreaseSumByBaseExternalID = in.readString();
+        this.decreaseSumByOrganizationID = in.readString();
+        this.decreaseSumSummary = in.readString();
+        this.tax1 = in.readString();
+        this.tax1ByBaseExternalID = in.readString();
+        this.tax1ByOrganizationID = in.readString();
+        this.tax1Summary = in.readString();
+        this.tax2 = in.readString();
+        this.tax2ByBaseExternalID = in.readString();
+        this.tax2ByOrganizationID = in.readString();
+        this.tax2Summary = in.readString();
+        this.orderPrepareTime = in.readString();
+        this.billItemCount = in.readString();
+        this.aVGPrepareTimeByBaseExternalID = in.readString();
+        this.aVGPrepareTimeByOrganizationID = in.readString();
+        this.aVGPrepareTimeSummary = in.readString();
+        this.discountGroupName = in.readString();
+        this.discountSum = in.readString();
+        this.bonusSum = in.readString();
+        this.discountPercent = in.readString();
+        this.paymentTypeName = in.readString();
+        this.paymentFiscalTypeName = in.readString();
+        this.accrual = in.readString();
+        this.discount = in.readString();
+        this.payment = in.readString();
+        this.sectionName = in.readString();
+        this.amount = in.readString();
+        this.placeGroupShort = in.readString();
+        this.userName = in.readString();
+    }
+
+    public static final Creator<Field> CREATOR = new Creator<Field>() {
+        @Override
+        public Field createFromParcel(Parcel source) {
+            return new Field(source);
+        }
+
+        @Override
+        public Field[] newArray(int size) {
+            return new Field[size];
+        }
+    };
+
+    @Override
+    public String toString() {
+        return "";
     }
 }
 
