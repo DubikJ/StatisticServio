@@ -8,18 +8,20 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import ua.com.servio.statisticservio.R;
-import ua.com.servio.statisticservio.model.json.Field;
+import ua.com.servio.statisticservio.model.ItemField;
 
 public class PaymentAdapter extends BaseAdapter {
 
     private Context context;
     private LayoutInflater inflater;
-    private final List<Field> fieldList;
+    private final List<ItemField> fieldList;
+    private DecimalFormat precision = new DecimalFormat("#.##");
 
-    public PaymentAdapter(Context context, List<Field> fieldList) {
+    public PaymentAdapter(Context context, List<ItemField> fieldList) {
         this.context = context;
         this.fieldList = fieldList;
         this.inflater = (LayoutInflater) context
@@ -49,17 +51,15 @@ public class PaymentAdapter extends BaseAdapter {
 
             convertView = inflater.inflate(R.layout.payment_item, null);
 
-            Field field = getField(position);
+            ItemField field = getItemField(position);
 
-            if(position==0 ||
-                    (position>0 &&
-                    !getField(position).getBaseExternalID().contains(field.getBaseExternalID())) ){
+            if(field.getShowTitle()){
                 LinearLayout paymentCap = (LinearLayout) convertView
                         .findViewById(R.id.payment_cap);
                 paymentCap.setVisibility(View.VISIBLE);
                 TextView paymentTitle = (TextView) convertView
                         .findViewById(R.id.payment_title);
-                paymentTitle.setText(field.getBaseExternalName());
+                paymentTitle.setText(field.getTitle());
             }
 
             TextView paymentTypeName = (TextView) convertView
@@ -70,20 +70,47 @@ public class PaymentAdapter extends BaseAdapter {
             paymentTypeFiscal.setText(field.getPaymentFiscalTypeName());
             TextView paymentTypeAccrual = (TextView) convertView
                     .findViewById(R.id.paymenttype_accrual);
-            paymentTypeAccrual.setText(field.getAccrual());
+            paymentTypeAccrual.setText(
+                    String.valueOf(field.getParam1()).replace(".",","));
             TextView paymentTypeDiscont = (TextView) convertView
                     .findViewById(R.id.paymenttype_discont);
-            paymentTypeDiscont.setText(field.getDiscount());
+            paymentTypeDiscont.setText(
+                    String.valueOf(field.getParam2()).replace(".",","));
             TextView paymentTypePayment = (TextView) convertView
                     .findViewById(R.id.paymenttype_payment);
-            paymentTypePayment.setText(field.getPayment());
+            paymentTypePayment.setText(
+                    String.valueOf(field.getParam3()).replace(".",","));
+
+            if(field.getShowTotal()){
+
+                LinearLayout paymentTotal = (LinearLayout) convertView
+                        .findViewById(R.id.payment_total);
+                paymentTotal.setVisibility(View.VISIBLE);
+
+                TextView paymentTotalTitle = (TextView) convertView
+                        .findViewById(R.id.payment_total_titla);
+                paymentTotalTitle.setText(context.getString(R.string.by)+" " + field.getTitle());
+
+                TextView paymentTypeAccrualTotal = (TextView) convertView
+                        .findViewById(R.id.paymenttype_accrual_total);
+                paymentTypeAccrualTotal.setText(
+                        precision.format(field.getParam1Total()).replace(".",","));
+                TextView paymentTypeDiscontTotal  = (TextView) convertView
+                        .findViewById(R.id.paymenttype_discont_total);
+                paymentTypeDiscontTotal.setText(
+                        precision.format(field.getParam2Total()).replace(".",","));
+                TextView paymentTypePaymentTotal  = (TextView) convertView
+                        .findViewById(R.id.paymenttype_payment_total);
+                paymentTypePaymentTotal.setText(
+                        precision.format(field.getParam3Total()).replace(".",","));
+
+            }
 
         }
-
         return convertView;
     }
 
-    private Field getField(int position){
+    private ItemField getItemField(int position){
         return  fieldList.get(position);
 
     }

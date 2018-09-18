@@ -81,12 +81,14 @@
     <string name="billcountreturn_cap">Чеков возврата</string>
 
     <string name="average_sumguest_cap">Сред. сумма по гостю</string>
-    <string name="average_sumbill_cap">Средняя сумма по чеку</string>
+    <string name="average_sumbill_cap">Сред. сумма по чеку</string>
     <string name="average_guestcount_cap">Сред. кол-во гостей</string>
     <string name="decreasecount_cap">Отказов от блюд</string>
     <string name="decreasesum_cap">Сумма отказов</string>
     <string name="tax1_cap">Налог 1</string>
     <string name="tax2_cap">Налог 2</string>
+
+    <string name="by">По </string>
 
     <string name="groupdiscountcap">Скидки по группам</string>
     <string name="groupdiscount">Дисконтная группа</string>
@@ -106,6 +108,27 @@
     <string name="paymenttype_discont">Скидка</string>
     <string name="paymenttype_payment">Оплачено</string>
 
+    <string name="sectioncap">По отделам</string>
+    <string name="sectioncap_name">Отдел</string>
+    <string name="sectioncap_amount">Кол-во</string>
+    <string name="sectioncap_accrual">Без скидки</string>
+    <string name="sectioncap_discont">Скидка</string>
+    <string name="sectioncap_payment">Оплачено</string>
 
+    <string name="hallcap">По залам</string>
+    <string name="hallcap_name">Зал</string>
+    <string name="hallcap_bills">Счетов</string>
+    <string name="hallcap_guests">Гостей</string>
+    <string name="hallcap_payment">Оплачено</string>
+    <string name="hallcap_sumbill">Сумма/Гость</string>
+    <string name="hallcap_sumguest">Сумма/Чек</string>
+
+    <string name="usercap">По обслуживающим</string>
+    <string name="usercap_name">Обслуживающий</string>
+    <string name="usercap_bills">Счетов</string>
+    <string name="usercap_guests">Гостей</string>
+    <string name="usercap_payment">Оплачено</string>
+    <string name="usercap_sumbill">Сумма/Гость</string>
+    <string name="usercap_sumguest">Сумма/Чек</string>
 
 </resources>

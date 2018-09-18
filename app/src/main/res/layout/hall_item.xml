@@ -7,17 +7,17 @@
         android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/payment_cap"
+        android:id="@+id/hall_cap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_weight="1"
         android:background="@color/colorPrimaryVeryLight"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
-            android:id="@+id/payment_title"
+            android:id="@+id/hall_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -40,13 +40,33 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/paymenttype_name"
+                android:id="@+id/hall_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorBackground">
+            </View>
+
+            <TextView
+                android:id="@+id/hall_bills"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
                 android:layout_weight="1.1"
+                android:gravity="right"
+                android:text="@string/zero"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_table_standart"/>
+
 
             <View
                 android:layout_width="1dp"
@@ -57,11 +77,11 @@
             </View>
 
             <TextView
-                android:id="@+id/paymenttype_fiscal"
+                android:id="@+id/hall_guests"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1.1"
                 android:gravity="right"
                 android:text="@string/zero"
                 android:textColor="@color/colorAccent"
@@ -76,11 +96,11 @@
             </View>
 
             <TextView
-                android:id="@+id/paymenttype_accrual"
+                android:id="@+id/hall_payment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.3"
+                android:layout_weight="1.1"
                 android:gravity="right"
                 android:text="@string/zero"
                 android:textColor="@color/colorAccent"
@@ -95,11 +115,11 @@
             </View>
 
             <TextView
-                android:id="@+id/paymenttype_discont"
+                android:id="@+id/hall_sumbill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.4"
+                android:layout_weight="1.15"
                 android:gravity="right"
                 android:text="@string/zero"
                 android:textColor="@color/colorAccent"
@@ -114,11 +134,11 @@
             </View>
 
             <TextView
-                android:id="@+id/paymenttype_payment"
+                android:id="@+id/hall_sumguest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.35"
+                android:layout_weight="1.15"
                 android:gravity="right"
                 android:text="@string/zero"
                 android:textColor="@color/colorAccent"
@@ -138,13 +158,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/payment_total"
+        android:id="@+id/hall_total"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@color/colorPrimaryVeryLight"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -153,11 +173,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/payment_total_titla"
+                android:id="@+id/hall_name_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
-                android:layout_weight="0.95"
+                android:layout_weight="1"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_table_standart"/>
 
@@ -170,11 +190,31 @@
             </View>
 
             <TextView
-                android:id="@+id/paymenttype_accrual_total"
+                android:id="@+id/hall_bills_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1.1"
+                android:gravity="right"
+                android:text="@string/zero"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorBackground">
+            </View>
+
+            <TextView
+                android:id="@+id/hall_guests_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.1"
                 android:gravity="right"
                 android:text="@string/zero"
                 android:textColor="@color/colorAccent"
@@ -189,11 +229,11 @@
             </View>
 
             <TextView
-                android:id="@+id/paymenttype_discont_total"
+                android:id="@+id/hall_payment_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1.1"
                 android:gravity="right"
                 android:text="@string/zero"
                 android:textColor="@color/colorAccent"
@@ -208,11 +248,30 @@
             </View>
 
             <TextView
-                android:id="@+id/paymenttype_payment_total"
+                android:id="@+id/hall_sumguest_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1.15"
+                android:gravity="right"
+                android:text="@string/zero"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorBackground">
+            </View>
+
+            <TextView
+                android:id="@+id/hall_sumbill_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.15"
                 android:gravity="right"
                 android:text="@string/zero"
                 android:textColor="@color/colorAccent"

@@ -10,7 +10,8 @@
     <dimen name="margin_ctext_layout">10dp</dimen>
 
     <!--Text size-->
-    <dimen name="text_size_standart">14dp</dimen>
+    <dimen name="text_size_standart">15dp</dimen>
+    <dimen name="text_size_table_standart">12dp</dimen>
 
     <dimen name="basic_margin_list_selection">2dp</dimen>
     <dimen name="basic_margin_left_list_selection">20dp</dimen>

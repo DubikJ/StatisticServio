@@ -52,40 +52,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
-                android:layout_weight="1"
+                android:layout_weight="1.1"
                 android:text="@string/paymenttype_name"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_standart"/>
+                android:textSize="@dimen/text_size_table_standart"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1.5"
                 android:gravity="right"
                 android:text="@string/paymenttype_fiscal"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_standart"/>
+                android:textSize="@dimen/text_size_table_standart"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.35"
+                android:layout_weight="1.3"
                 android:gravity="right"
                 android:text="@string/paymenttype_accrual"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_standart"/>
+                android:textSize="@dimen/text_size_table_standart"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.35"
+                android:layout_weight="1.4"
                 android:gravity="right"
                 android:text="@string/paymenttype_discont"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_standart"/>
+                android:textSize="@dimen/text_size_table_standart"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -95,7 +95,7 @@
                 android:gravity="right"
                 android:text="@string/paymenttype_payment"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_standart"/>
+                android:textSize="@dimen/text_size_table_standart"/>
 
         </LinearLayout>
 
@@ -115,43 +115,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
-                android:layout_weight="1"
+                android:layout_weight="0.98"
                 android:text="@string/total"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_standart"/>
+                android:textSize="@dimen/text_size_table_standart"/>
 
             <TextView
                 android:id="@+id/payment_total_accrual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1.31"
                 android:gravity="right"
                 android:text="@string/zero"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_standart"/>
+                android:textSize="@dimen/text_size_table_standart"/>
 
             <TextView
                 android:id="@+id/payment_total_discont"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1.44"
                 android:gravity="right"
                 android:text="@string/zero"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_standart"/>
+                android:textSize="@dimen/text_size_table_standart"/>
 
             <TextView
                 android:id="@+id/payment_total_payment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1.4"
                 android:gravity="right"
                 android:text="@string/zero"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text_size_standart"/>
+                android:textSize="@dimen/text_size_table_standart"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -568,6 +568,25 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"/>
 
+                <include
+                    layout="@layout/section_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"/>
+
+                <include
+                    layout="@layout/hall_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"/>
+
+                <include
+                    layout="@layout/user_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"/>
+
+
             </LinearLayout>
 
         </ScrollView>
