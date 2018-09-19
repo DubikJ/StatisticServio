@@ -264,6 +264,31 @@ public class Field implements Parcelable {
     @SerializedName("UserName")
     private String userName;
 
+    //Sales
+    @Expose
+    @SerializedName("ArticleCode")
+    private String articleCode;
+    @Expose
+    @SerializedName("ArticleName")
+    private String articleName;
+    @Expose
+    @SerializedName("SubTotal")
+    private String subTotal;
+    @Expose
+    @SerializedName("BaseTotal")
+    private String baseTotal;
+    @Expose
+    @SerializedName("AVGTimePrepare")
+    private String aVGTimePrepare;
+    @Expose
+    @SerializedName("AVGTimePrepareByBaseExternalID")
+    private String aVGTimePrepareByBaseExternalID;
+    @Expose
+    @SerializedName("AVGTimePrepareByOrganizationID")
+    private String aVGTimePrepareByOrganizationID;
+    @Expose
+    @SerializedName("AVGTimePrepareSummary")
+    private String aVGTimePrepareSummary;
 
     public Field(String commonID, String baseExternalID, String baseExternalName,
                  String organizationID, String organizationName, String buyerID,
@@ -282,26 +307,26 @@ public class Field implements Parcelable {
                  String billOpenedTotal, String billOpenedTotalByBaseExternalID,
                  String billOpenedTotalByOrganizationID, String billOpenedTotalSummary,
                  String sumGuest, String sumGuestByBaseExternalID,
-                 String sumGuestByOrganizationID, String sumGuestSummary,
-                 String sumBill, String sumBillByBaseExternalID,
-                 String sumBillByOrganizationID, String sumBillSummary,
-                 String guestBill, String guestBillByBaseExternalID,
+                 String sumGuestByOrganizationID, String sumGuestSummary, String sumBill,
+                 String sumBillByBaseExternalID, String sumBillByOrganizationID,
+                 String sumBillSummary, String guestBill, String guestBillByBaseExternalID,
                  String guestBillByOrganizationID, String guestBillSummary,
                  String decreaseCount, String decreaseCountByBaseExternalID,
                  String decreaseCountByOrganizationID, String decreaseCountSummary,
                  String decreaseSum, String decreaseSumByBaseExternalID,
-                 String decreaseSumByOrganizationID, String decreaseSumSummary,
-                 String tax1, String tax1ByBaseExternalID, String tax1ByOrganizationID,
+                 String decreaseSumByOrganizationID, String decreaseSumSummary, String tax1,
+                 String tax1ByBaseExternalID, String tax1ByOrganizationID,
                  String tax1Summary, String tax2, String tax2ByBaseExternalID,
-                 String tax2ByOrganizationID, String tax2Summary,
-                 String orderPrepareTime, String billItemCount,
-                 String aVGPrepareTimeByBaseExternalID,
-                 String aVGPrepareTimeByOrganizationID,
-                 String aVGPrepareTimeSummary, String discountGroupName,
-                 String discountSum, String bonusSum, String discountPercent,
-                 String paymentTypeName, String paymentFiscalTypeName,
+                 String tax2ByOrganizationID, String tax2Summary, String orderPrepareTime,
+                 String billItemCount, String aVGPrepareTimeByBaseExternalID,
+                 String aVGPrepareTimeByOrganizationID, String aVGPrepareTimeSummary,
+                 String discountGroupName, String discountSum, String bonusSum,
+                 String discountPercent, String paymentTypeName, String paymentFiscalTypeName,
                  String accrual, String discount, String payment, String sectionName,
-                 String amount, String placeGroupShort, String userName) {
+                 String amount, String placeGroupShort, String userName, String articleCode,
+                 String articleName, String subTotal, String baseTotal, String aVGTimePrepare,
+                 String aVGTimePrepareByBaseExternalID, String aVGTimePrepareByOrganizationID,
+                 String aVGTimePrepareSummary) {
         this.commonID = commonID;
         this.baseExternalID = baseExternalID;
         this.baseExternalName = baseExternalName;
@@ -383,6 +408,14 @@ public class Field implements Parcelable {
         this.amount = amount;
         this.placeGroupShort = placeGroupShort;
         this.userName = userName;
+        this.articleCode = articleCode;
+        this.articleName = articleName;
+        this.subTotal = subTotal;
+        this.baseTotal = baseTotal;
+        this.aVGTimePrepare = aVGTimePrepare;
+        this.aVGTimePrepareByBaseExternalID = aVGTimePrepareByBaseExternalID;
+        this.aVGTimePrepareByOrganizationID = aVGTimePrepareByOrganizationID;
+        this.aVGTimePrepareSummary = aVGTimePrepareSummary;
     }
 
     public String getCommonID() {
@@ -709,6 +742,38 @@ public class Field implements Parcelable {
         return userName;
     }
 
+    public String getArticleCode() {
+        return articleCode;
+    }
+
+    public String getArticleName() {
+        return articleName;
+    }
+
+    public String getSubTotal() {
+        return subTotal;
+    }
+
+    public String getBaseTotal() {
+        return baseTotal;
+    }
+
+    public String getaVGTimePrepare() {
+        return aVGTimePrepare;
+    }
+
+    public String getaVGTimePrepareByBaseExternalID() {
+        return aVGTimePrepareByBaseExternalID;
+    }
+
+    public String getaVGTimePrepareByOrganizationID() {
+        return aVGTimePrepareByOrganizationID;
+    }
+
+    public String getaVGTimePrepareSummary() {
+        return aVGTimePrepareSummary;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -797,6 +862,14 @@ public class Field implements Parcelable {
         dest.writeString(this.amount);
         dest.writeString(this.placeGroupShort);
         dest.writeString(this.userName);
+        dest.writeString(this.articleCode);
+        dest.writeString(this.articleName);
+        dest.writeString(this.subTotal);
+        dest.writeString(this.baseTotal);
+        dest.writeString(this.aVGTimePrepare);
+        dest.writeString(this.aVGTimePrepareByBaseExternalID);
+        dest.writeString(this.aVGTimePrepareByOrganizationID);
+        dest.writeString(this.aVGTimePrepareSummary);
     }
 
     protected Field(Parcel in) {
@@ -881,6 +954,14 @@ public class Field implements Parcelable {
         this.amount = in.readString();
         this.placeGroupShort = in.readString();
         this.userName = in.readString();
+        this.articleCode = in.readString();
+        this.articleName = in.readString();
+        this.subTotal = in.readString();
+        this.baseTotal = in.readString();
+        this.aVGTimePrepare = in.readString();
+        this.aVGTimePrepareByBaseExternalID = in.readString();
+        this.aVGTimePrepareByOrganizationID = in.readString();
+        this.aVGTimePrepareSummary = in.readString();
     }
 
     public static final Creator<Field> CREATOR = new Creator<Field>() {

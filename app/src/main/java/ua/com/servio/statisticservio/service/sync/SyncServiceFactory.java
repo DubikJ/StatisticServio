@@ -67,6 +67,10 @@ public class SyncServiceFactory {
         return builder = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(new NullOnEmptyConverterFactory())
+                .addConverterFactory(JsonConverterFactory.create(new GsonBuilder()
+                        .registerTypeAdapter(Date.class, dateJsonSerializer)
+                        .registerTypeAdapter(Date.class, dateJsonDeserializer)
+                        .create()))
                 .addConverterFactory(GsonConverterFactory.create(
                         new GsonBuilder()
                                 .registerTypeAdapter(Date.class, dateJsonSerializer)

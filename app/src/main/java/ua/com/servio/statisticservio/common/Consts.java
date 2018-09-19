@@ -8,6 +8,7 @@ public final class Consts {
     public final static String AUTH_PATTERN_URL = "AuthPerson";
 
     public final static String SUMMARY_STATIC_PATTERN_URL = "getSummaryStatic";
+    public final static String SALES_PATTERN_URL = "getSales";
 
     public final static String LOGIN = "_login";
     public final static String PASSWORD = "_password";
@@ -22,4 +23,5 @@ public final class Consts {
     public final static String BAND_NAME_HALL = "Hall";
     public final static String BAND_NAME_USER = "User";
     public final static String BAND_NAME_CHARPAYMENT = "CharPayment";
+    public final static String BAND_NAME_SALES = "Sales";
 }

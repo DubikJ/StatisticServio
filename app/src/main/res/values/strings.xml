@@ -134,4 +134,11 @@
     <string name="usercap_sumbill">Сумма/Гость</string>
     <string name="usercap_sumguest">Сумма/Чек</string>
 
+    <string name="salescap_name">Наименование</string>
+    <string name="salescap_amount">Кол-во</string>
+    <string name="salescap_subtotal">Без скидки</string>
+    <string name="salescap_discount">Скидка</string>
+    <string name="salescap_basetotal">Со скидкой</string>
+    <string name="salescap_tax1">Налог 1</string>
+
 </resources>

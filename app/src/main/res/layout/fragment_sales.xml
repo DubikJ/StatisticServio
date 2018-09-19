@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorBackground">
+
+
+    <TextView
+        android:id="@+id/no_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/table_report_no_data"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/salescap_name"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.2"
+                android:gravity="center"
+                android:text="@string/salescap_amount"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.2"
+                android:gravity="center"
+                android:text="@string/salescap_subtotal"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.2"
+                android:gravity="center"
+                android:text="@string/salescap_discount"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.2"
+                android:gravity="right|center"
+                android:text="@string/salescap_basetotal"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.2"
+                android:gravity="right|center"
+                android:text="@string/salescap_tax1"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/salescap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+    </LinearLayout>
+
+</LinearLayout>

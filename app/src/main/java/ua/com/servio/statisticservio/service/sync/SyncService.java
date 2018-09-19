@@ -9,6 +9,7 @@ import ua.com.servio.statisticservio.model.json.DownloadResponse;
 import ua.com.servio.statisticservio.model.json.UploadResponse;
 
 import static ua.com.servio.statisticservio.common.Consts.AUTH_PATTERN_URL;
+import static ua.com.servio.statisticservio.common.Consts.SALES_PATTERN_URL;
 import static ua.com.servio.statisticservio.common.Consts.SUMMARY_STATIC_PATTERN_URL;
 
 public interface SyncService {
@@ -18,6 +19,9 @@ public interface SyncService {
 
     @POST(SUMMARY_STATIC_PATTERN_URL)
     Observable<DownloadResponse> getSummaryStatic(@Body UploadResponse uploadResponse);
+
+    @POST(SALES_PATTERN_URL)
+    Observable<DownloadResponse> getSales(@Body UploadResponse uploadResponse);
 
 
 }
