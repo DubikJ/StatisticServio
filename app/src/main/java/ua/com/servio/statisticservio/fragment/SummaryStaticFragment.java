@@ -2,6 +2,7 @@ package ua.com.servio.statisticservio.fragment;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -27,13 +27,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ua.com.servio.statisticservio.R;
 import ua.com.servio.statisticservio.activity.BasicActivity;
-import ua.com.servio.statisticservio.adapter.GroupDiscountAdapter;
-import ua.com.servio.statisticservio.adapter.HallAdapter;
-import ua.com.servio.statisticservio.adapter.ManualDiscountAdapter;
-import ua.com.servio.statisticservio.adapter.PaymentAdapter;
-import ua.com.servio.statisticservio.adapter.SectionAdapter;
-import ua.com.servio.statisticservio.adapter.UserAdapter;
-import ua.com.servio.statisticservio.model.ItemField;
 import ua.com.servio.statisticservio.model.json.Band;
 import ua.com.servio.statisticservio.model.json.DownloadResponse;
 import ua.com.servio.statisticservio.model.json.Field;
@@ -76,6 +69,7 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             paymentDiscountFields, sectionDiscountFields, hallDiscountFields, userDiscountFields;
 
     private DecimalFormat precision = new DecimalFormat("#.##");
+    private LayoutInflater inflater;
 
     public static SummaryStaticFragment getInstance() {
 
@@ -121,6 +115,8 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
     }
 
     private void initStartData(){
+
+        inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         RelativeLayout groupDiscountCap = (RelativeLayout) view.findViewById(R.id.groupdiscountcap);
         final ImageView groupDiscountCapImage = (ImageView) view.findViewById(R.id.groupdiscountcap_image);
@@ -479,19 +475,31 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
     }
 
     private void initGroupDiscount(List<Field> fields){
+
+        LinearLayout groupdiscountcapContent = (LinearLayout) view.findViewById(R.id.groupdiscountcap_content);
+
         Double billCount = 0.0;
         Double discountSum = 0.0;
         Double bonusSum = 0.0;
         for(Field field : fields){
+
+            View convertView = inflater.inflate(R.layout.group_discount_item, null);
+
+            TextView groupDiscountName = (TextView) convertView.findViewById(R.id.groupdiscount_name);
+            groupDiscountName.setText(field.getDiscountGroupName());
+            TextView groupDiscountBills = (TextView) convertView.findViewById(R.id.groupdiscount_bills);
+            groupDiscountBills.setText(field.getBillCount());
+            TextView groupDiscountDiscont = (TextView) convertView.findViewById(R.id.groupdiscount_discont);
+            groupDiscountDiscont.setText(field.getDiscountSum());
+            TextView groupDiscountPaid = (TextView) convertView.findViewById(R.id.groupdiscount_paid);
+            groupDiscountPaid.setText(field.getBonusSum());
+
             billCount = billCount + stringToDouble(field.getBillCount());
             discountSum = discountSum + stringToDouble(field.getDiscountSum());
             bonusSum = bonusSum + stringToDouble(field.getBonusSum());
+
+            groupdiscountcapContent.addView(convertView);
         }
-
-
-        GroupDiscountAdapter adapter = new GroupDiscountAdapter(getActivity(), fields);
-        ListView groupDiscountCapContent = (ListView) view.findViewById(R.id.groupdiscountcap_content);
-        groupDiscountCapContent.setAdapter(adapter);
 
         TextView discTotalBills = (TextView) view.findViewById(R.id.groupdiscount_total_bills);
         discTotalBills.setText(precision.format(billCount).replace(".",","));
@@ -503,17 +511,27 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
     }
 
     private void initManualDiscount(List<Field> fields){
+
+        LinearLayout manualdiscountcapContent = (LinearLayout) view.findViewById(R.id.manualdiscountcap_content);
+
         Double billCount = 0.0;
         Double bonusSum = 0.0;
         for(Field field : fields){
+
+            View convertView = inflater.inflate(R.layout.manual_discount_item, null);
+
+            TextView manualDiscountName = (TextView) convertView.findViewById(R.id.manualdiscount_name);
+            manualDiscountName.setText(field.getDiscountPercent());
+            TextView manualDiscountBills = (TextView) convertView.findViewById(R.id.manualdiscount_bills);
+            manualDiscountBills.setText(field.getBillCount());
+            TextView manualDiscountDiscont = (TextView) convertView.findViewById(R.id.manualdiscount_sum);
+            manualDiscountDiscont.setText(field.getDiscountSum());
+
             billCount = billCount + stringToDouble(field.getBillCount());
             bonusSum = bonusSum + stringToDouble(field.getDiscountSum());
+
+            manualdiscountcapContent.addView(convertView);
         }
-
-
-        ManualDiscountAdapter adapter = new ManualDiscountAdapter(getActivity(), fields);
-        ListView manualDiscountCapContent = (ListView) view.findViewById(R.id.manualdiscountcap_content);
-        manualDiscountCapContent.setAdapter(adapter);
 
         TextView discTotalBills = (TextView) view.findViewById(R.id.manualdiscount_total_bills);
         discTotalBills.setText(precision.format(billCount).replace(".",","));
@@ -523,19 +541,45 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
     }
 
     private void initPayment(List<Field> fields){
+
+        LinearLayout paymencapContent = (LinearLayout) view.findViewById(R.id.paymentcap_content);
+
         Double accrualItem = 0.0;
         Double discontItem = 0.0;
         Double paymentItem = 0.0;
+        Double accrualFiscal = 0.0;
+        Double discontFiscal = 0.0;
+        Double paymentFiscal = 0.0;
         Double accrualTotal = 0.0;
         Double discontTotal = 0.0;
         Double paymentTotal = 0.0;
 
-        List<ItemField> itemFields = new ArrayList<>();
         String id = null;
 
-        ItemField fieldOld = null;
-
         for(Field field : fields){
+
+            View convertView = inflater.inflate(R.layout.payment_item, null);
+
+            LinearLayout paymentCap = (LinearLayout) convertView.findViewById(R.id.payment_cap);
+            TextView paymentTitle = (TextView) convertView.findViewById(R.id.payment_title);
+            TextView paymentTypeName = (TextView) convertView.findViewById(R.id.paymenttype_name);
+            TextView paymentTypeFiscal = (TextView) convertView.findViewById(R.id.paymenttype_fiscal);
+            TextView paymentTypeAccrual = (TextView) convertView.findViewById(R.id.paymenttype_accrual);
+            TextView paymentTypeDiscont = (TextView) convertView.findViewById(R.id.paymenttype_discont);
+            TextView paymentTypePayment = (TextView) convertView.findViewById(R.id.paymenttype_payment);
+
+            LinearLayout paymentTypeItem = (LinearLayout) convertView.findViewById(R.id.payment_total);
+            TextView paymentTotalTitle = (TextView) convertView.findViewById(R.id.payment_total_titla);
+            TextView paymentTypeAccrualTotal = (TextView) convertView.findViewById(R.id.paymenttype_accrual_total);
+            TextView paymentTypeDiscontTotal  = (TextView) convertView.findViewById(R.id.paymenttype_discont_total);
+            TextView paymentTypePaymentTotal  = (TextView) convertView.findViewById(R.id.paymenttype_payment_total);
+
+            LinearLayout paymentTypeFiscalLine = (LinearLayout) convertView.findViewById(R.id.payment_fiscal_line);
+            TextView paymentFiscalTitle = (TextView) convertView.findViewById(R.id.payment_fiscal_titla);
+            TextView paymentTypeAccrualFiscal = (TextView) convertView.findViewById(R.id.paymenttype_accrual_fiscal);
+            TextView paymentTypeDiscontFiscal  = (TextView) convertView.findViewById(R.id.paymenttype_discont_fiscal);
+            TextView paymentTypePaymentFiscal  = (TextView) convertView.findViewById(R.id.paymenttype_payment_fiscal);
+
             Double accrual = stringToDouble(field.getAccrual());
             Double discont = stringToDouble(field.getDiscount());
             Double payment = stringToDouble(field.getPayment());
@@ -544,18 +588,19 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             discontTotal = discontTotal + discont;
             paymentTotal = paymentTotal + payment;
 
-            Boolean showTitle =false;
-
             if (id == null) {
-                showTitle = true;
+                paymentCap.setVisibility(View.VISIBLE);
+                paymentTitle.setText(field.getBaseExternalName());
             }else {
                 if (!field.getBaseExternalID().equals(id)) {
-                    showTitle = true;
+                    paymentCap.setVisibility(View.VISIBLE);
+                    paymentTitle.setText(field.getBaseExternalName());
                     accrualItem = 0.0;
                     discontItem = 0.0;
                     paymentItem = 0.0;
-                } else {
-                    fieldOld.setShowTotal(false);
+                    accrualFiscal = 0.0;
+                    discontFiscal = 0.0;
+                    paymentFiscal = 0.0;
                 }
             }
 
@@ -563,30 +608,62 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             discontItem = discontItem + discont;
             paymentItem = paymentItem + payment;
 
-            ItemField itemField = new ItemField(field.getBaseExternalName(),
-                    field.getPaymentTypeName(),
-                    field.getPaymentFiscalTypeName(),
-                    accrual,
-                    discont,
-                    payment,
-                    accrualItem,
-                    discontItem,
-                    paymentItem,
-                    showTitle,
-                    true);
+            accrualFiscal = accrualFiscal + accrual;
+            discontFiscal = discontFiscal + discont;
+            paymentFiscal = paymentFiscal + payment;
 
-            itemFields.add(itemField);
+            paymentTypeName.setText(field.getPaymentTypeName());
+            paymentTypeFiscal.setText(field.getPaymentFiscalTypeName());
+            paymentTypeAccrual.setText(field.getAccrual());
+            paymentTypeDiscont.setText(field.getDiscount());
+            paymentTypePayment.setText(field.getPayment());
 
+            Field nextField;
+            try {
+                nextField = fields.get(fields.indexOf(field)+1);
+            } catch (Exception e) {
+                nextField = null;
+            }
+
+            if (nextField == null || !field.getBaseExternalID().equals(nextField.getBaseExternalID())) {
+
+                paymentTypeFiscalLine.setVisibility(View.VISIBLE);
+                paymentFiscalTitle.setText(
+                        getActivity().getString(R.string.by)+" " + field.getPaymentFiscalTypeName());
+                paymentTypeAccrualFiscal.setText(
+                        precision.format(accrualFiscal).replace(".",","));
+                paymentTypeDiscontFiscal.setText(
+                        precision.format(discontFiscal).replace(".",","));
+                paymentTypePaymentFiscal.setText(
+                        precision.format(paymentFiscal).replace(".",","));
+
+                paymentTypeItem.setVisibility(View.VISIBLE);
+                paymentTotalTitle.setText(getActivity().getString(R.string.by)+" " + field.getBaseExternalName());
+                paymentTypeAccrualTotal.setText(
+                        precision.format(accrualItem).replace(".",","));
+                paymentTypeDiscontTotal.setText(
+                        precision.format(discontItem).replace(".",","));
+                paymentTypePaymentTotal.setText(
+                        precision.format(paymentItem).replace(".",","));
+
+            }else if(nextField != null &&
+                    !field.getPaymentFiscalTypeName().equals(nextField.getPaymentFiscalTypeName())){
+                paymentTypeFiscalLine.setVisibility(View.VISIBLE);
+                paymentFiscalTitle.setText(
+                        getActivity().getString(R.string.by)+" " + field.getPaymentFiscalTypeName());
+                paymentTypeAccrualFiscal.setText(
+                        precision.format(accrualFiscal).replace(".",","));
+                paymentTypeDiscontFiscal.setText(
+                        precision.format(discontFiscal).replace(".",","));
+                paymentTypePaymentFiscal.setText(
+                        precision.format(paymentFiscal).replace(".",","));
+                accrualFiscal = 0.0;
+                discontFiscal = 0.0;
+                paymentFiscal = 0.0;
+            }
             id = field.getBaseExternalID();
-
-            fieldOld = itemField;
-
+            paymencapContent.addView(convertView);
         }
-
-
-        PaymentAdapter adapter = new PaymentAdapter(getActivity(), itemFields);
-        ListView listView = (ListView) view.findViewById(R.id.paymentcap_content);
-        listView.setAdapter(adapter);
 
         TextView paymentTotalAccrual = (TextView) view.findViewById(R.id.payment_total_accrual);
         paymentTotalAccrual.setText(precision.format(accrualTotal).replace(".",","));
@@ -599,6 +676,9 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
     }
 
     private void initSection(List<Field> fields){
+
+        LinearLayout sectioncapContent = (LinearLayout) view.findViewById(R.id.sectioncap_content);
+
         Double amountItem = 0.0;
         Double accrualItem = 0.0;
         Double discontItem = 0.0;
@@ -608,12 +688,27 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
         Double discontTotal = 0.0;
         Double paymentTotal = 0.0;
 
-        List<ItemField> itemFields = new ArrayList<>();
         String id = null;
 
-        ItemField fieldOld = null;
-
         for(Field field : fields){
+
+            View convertView = inflater.inflate(R.layout.section_item, null);
+
+            LinearLayout sectionCap = (LinearLayout) convertView.findViewById(R.id.section_cap);
+            TextView sectionTitle = (TextView) convertView.findViewById(R.id.section_title);
+            TextView sectionName = (TextView) convertView.findViewById(R.id.section_name);
+            TextView sectionAmount = (TextView) convertView.findViewById(R.id.section_amount);
+            TextView sectionAccrual = (TextView) convertView.findViewById(R.id.section_accrual);
+            TextView sectionDiscont = (TextView) convertView.findViewById(R.id.section_discont);
+            TextView sectionPayment = (TextView) convertView.findViewById(R.id.section_payment);
+
+            LinearLayout sectionTotal = (LinearLayout) convertView.findViewById(R.id.section_total);
+            TextView sectionNameItem = (TextView) convertView.findViewById(R.id.section_name_item);
+            TextView sectionAmountItem = (TextView) convertView.findViewById(R.id.section_amount_item);
+            TextView sectionAccrualItem  = (TextView) convertView.findViewById(R.id.section_accrual_item);
+            TextView sectionDiscontItem  = (TextView) convertView.findViewById(R.id.section_discont_item);
+            TextView sectionPaymentItem  = (TextView) convertView.findViewById(R.id.section_payment_item);
+
             Double amount = stringToDouble(field.getAmount());
             Double accrual = stringToDouble(field.getAccrual());
             Double discont = stringToDouble(field.getDiscount());
@@ -624,19 +719,17 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             discontTotal = discontTotal + discont;
             paymentTotal = paymentTotal + payment;
 
-            Boolean showTitle = false;
-
             if (id == null) {
-                showTitle = true;
+                sectionCap.setVisibility(View.VISIBLE);
+                sectionTitle.setText(field.getBaseExternalName());
             }else {
                 if (!field.getBaseExternalID().equals(id)) {
-                    showTitle = true;
+                    sectionCap.setVisibility(View.VISIBLE);
+                    sectionTitle.setText(field.getBaseExternalName());
                     amountItem = 0.0;
                     accrualItem = 0.0;
                     discontItem = 0.0;
                     paymentItem = 0.0;
-                } else {
-                    fieldOld.setShowTotal(false);
                 }
             }
 
@@ -645,32 +738,35 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             discontItem = discontItem + discont;
             paymentItem = paymentItem + payment;
 
-            ItemField itemField = new ItemField(field.getBaseExternalName(),
-                    field.getSectionName(),
-                    field.getPaymentFiscalTypeName(),
-                    amount,
-                    accrual,
-                    discont,
-                    payment,
-                    amountItem,
-                    accrualItem,
-                    discontItem,
-                    paymentItem,
-                    showTitle,
-                    true);
+            sectionName.setText(field.getSectionName());
+            sectionAmount.setText(field.getAmount());
+            sectionAccrual.setText(field.getAccrual());
+            sectionDiscont.setText(field.getDiscount());
+            sectionPayment.setText(field.getPayment());
 
-            itemFields.add(itemField);
+            Field nextField;
+            try {
+                nextField = fields.get(fields.indexOf(field)+1);
+            } catch (Exception e) {
+                nextField = null;
+            }
 
+            if (nextField == null || !field.getBaseExternalID().equals(nextField.getBaseExternalID())) {
+
+                sectionTotal.setVisibility(View.VISIBLE);
+                sectionNameItem.setText(getActivity().getString(R.string.by)+" " + field.getBaseExternalName());
+                sectionAmountItem.setText(
+                        precision.format(amountItem).replace(".",","));
+                sectionAccrualItem.setText(
+                        precision.format(accrualItem).replace(".",","));
+                sectionDiscontItem.setText(
+                        precision.format(discontItem).replace(".",","));
+                sectionPaymentItem.setText(
+                        precision.format(paymentItem).replace(".",","));
+            }
             id = field.getBaseExternalID();
-
-            fieldOld = itemField;
-
+            sectioncapContent.addView(convertView);
         }
-
-
-        SectionAdapter adapter = new SectionAdapter(getActivity(), itemFields);
-        ListView listView = (ListView) view.findViewById(R.id.sectioncap_content);
-        listView.setAdapter(adapter);
 
         TextView sectioncapTotalAmount = (TextView) view.findViewById(R.id.sectioncap_total_amount);
         sectioncapTotalAmount.setText(precision.format(amountTotal).replace(".",","));
@@ -680,11 +776,12 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
         sectioncapTotalDiscont.setText(precision.format(discontTotal).replace(".",","));
         TextView sectioncapTotalPayment = (TextView) view.findViewById(R.id.sectioncap_total_payment);
         sectioncapTotalPayment.setText(precision.format(paymentTotal).replace(".",","));
-
-
     }
 
     private void initHall(List<Field> fields){
+
+        LinearLayout hallcapContent = (LinearLayout) view.findViewById(R.id.hallcap_content);
+
         Double billItem = 0.0;
         Double guestItem = 0.0;
         Double paymentItem = 0.0;
@@ -696,12 +793,29 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
         Double sumGuestTotal = 0.0;
         Double sumBillTotal = 0.0;
 
-        List<ItemField> itemFields = new ArrayList<>();
         String id = null;
 
-        ItemField fieldOld = null;
+        for(Field field : fields) {
 
-        for(Field field : fields){
+            View convertView = inflater.inflate(R.layout.hall_item, null);
+
+            LinearLayout hallCap = (LinearLayout) convertView.findViewById(R.id.hall_cap);
+            TextView hallTitle = (TextView) convertView.findViewById(R.id.hall_title);
+            TextView hallName = (TextView) convertView.findViewById(R.id.hall_name);
+            TextView hallBills = (TextView) convertView.findViewById(R.id.hall_bills);
+            TextView hallGuests = (TextView) convertView.findViewById(R.id.hall_guests);
+            TextView hallPayment = (TextView) convertView.findViewById(R.id.hall_payment);
+            TextView hallSumbill = (TextView) convertView.findViewById(R.id.hall_sumbill);
+            TextView hallSumguest = (TextView) convertView.findViewById(R.id.hall_sumguest);
+
+            LinearLayout sectionTotal = (LinearLayout) convertView.findViewById(R.id.hall_total);
+            TextView hallNameItem = (TextView) convertView.findViewById(R.id.hall_name_item);
+            TextView hallBillsItem = (TextView) convertView.findViewById(R.id.hall_bills_item);
+            TextView hallGuestsItem  = (TextView) convertView.findViewById(R.id.hall_guests_item);
+            TextView hallPaymentItem  = (TextView) convertView.findViewById(R.id.hall_payment_item);
+            TextView hallSumguestItem  = (TextView) convertView.findViewById(R.id.hall_sumguest_item);
+            TextView hallSumbillItem  = (TextView) convertView.findViewById(R.id.hall_sumbill_item);
+
             Double bill = stringToDouble(field.getBillCount());
             Double guest = stringToDouble(field.getGuestCount());
             Double payment = stringToDouble(field.getPayment());
@@ -714,20 +828,18 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             sumGuestTotal = sumGuestTotal + sumGuest;
             sumBillTotal = sumBillTotal + sumBill;
 
-            Boolean showTitle = false;
-
             if (id == null) {
-                showTitle = true;
-            }else {
+                hallCap.setVisibility(View.VISIBLE);
+                hallTitle.setText(field.getBaseExternalName());
+            } else {
                 if (!field.getBaseExternalID().equals(id)) {
-                    showTitle = true;
+                    hallCap.setVisibility(View.VISIBLE);
+                    hallTitle.setText(field.getBaseExternalName());
                     billItem = 0.0;
                     guestItem = 0.0;
                     paymentItem = 0.0;
                     sumGuestItem = 0.0;
                     sumBillItem = 0.0;
-                } else {
-                    fieldOld.setShowTotal(false);
                 }
             }
 
@@ -737,34 +849,39 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             sumGuestItem = sumGuestItem + sumGuest;
             sumBillItem = sumBillItem + sumBill;
 
-            ItemField itemField = new ItemField(field.getBaseExternalName(),
-                    "",
-                    "",
-                    bill,
-                    guest,
-                    payment,
-                    sumGuest,
-                    sumBill,
-                    billItem,
-                    guestItem,
-                    paymentItem,
-                    sumGuestItem,
-                    sumBillItem,
-                    showTitle,
-                    true);
+            hallName.setText(field.getPlaceGroupShort());
+            hallBills.setText(field.getBillCount());
+            hallGuests.setText(field.getGuestCount());
+            hallPayment.setText(field.getPayment());
+            hallSumbill.setText(field.getSumGuest());
+            hallSumguest.setText(field.getSumBill());
 
-            itemFields.add(itemField);
 
+            Field nextField;
+            try {
+                nextField = fields.get(fields.indexOf(field)+1);
+            } catch (Exception e) {
+                nextField = null;
+            }
+
+            if (nextField == null || !field.getBaseExternalID().equals(nextField.getBaseExternalID())) {
+
+                sectionTotal.setVisibility(View.VISIBLE);
+                hallNameItem.setText(getActivity().getString(R.string.by)+" " + field.getBaseExternalName());
+                hallBillsItem.setText(
+                        precision.format(billItem).replace(".",","));
+                hallGuestsItem.setText(
+                        precision.format(guestItem).replace(".",","));
+                hallPaymentItem.setText(
+                        precision.format(paymentItem).replace(".",","));
+                hallSumguestItem.setText(
+                        precision.format(sumGuestItem).replace(".",","));
+                hallSumbillItem.setText(
+                        precision.format(sumBillItem).replace(".",","));
+            }
             id = field.getBaseExternalID();
-
-            fieldOld = itemField;
-
+            hallcapContent.addView(convertView);
         }
-
-
-        HallAdapter adapter = new HallAdapter(getActivity(), itemFields);
-        ListView listView = (ListView) view.findViewById(R.id.hallcap_content);
-        listView.setAdapter(adapter);
 
         TextView hallcapBillsTotal = (TextView) view.findViewById(R.id.hallcap_bills_total);
         hallcapBillsTotal.setText(precision.format(billTotal).replace(".",","));
@@ -780,7 +897,10 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
 
     }
 
-    private void initUser(List<Field> fields){
+    private void initUser(List<Field> fields) {
+
+        LinearLayout usercapContent = (LinearLayout) view.findViewById(R.id.usercap_content);
+
         Double billItem = 0.0;
         Double guestItem = 0.0;
         Double paymentItem = 0.0;
@@ -792,17 +912,36 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
         Double sumGuestTotal = 0.0;
         Double sumBillTotal = 0.0;
 
-        List<ItemField> itemFields = new ArrayList<>();
         String id = null;
 
-        ItemField fieldOld = null;
+        for (Field field : fields) {
 
-        for(Field field : fields){
+            View convertView = inflater.inflate(R.layout.user_item, null);
+
+            LinearLayout userCap = (LinearLayout) convertView.findViewById(R.id.user_cap);
+            TextView userTitle = (TextView) convertView.findViewById(R.id.user_title);
+            TextView userName = (TextView) convertView.findViewById(R.id.user_name);
+            TextView userBills = (TextView) convertView.findViewById(R.id.user_bills);
+            TextView userGuests = (TextView) convertView.findViewById(R.id.user_guests);
+            TextView userPayment = (TextView) convertView.findViewById(R.id.user_payment);
+            TextView userSumbill = (TextView) convertView.findViewById(R.id.user_sumbill);
+            TextView userSumguest = (TextView) convertView.findViewById(R.id.user_sumguest);
+
+            LinearLayout userTotal = (LinearLayout) convertView.findViewById(R.id.user_total);
+            TextView userNameItem = (TextView) convertView.findViewById(R.id.user_name_item);
+            TextView userBillsItem = (TextView) convertView.findViewById(R.id.user_bills_item);
+            TextView userGuestsItem = (TextView) convertView.findViewById(R.id.user_guests_item);
+            TextView userPaymentItem = (TextView) convertView.findViewById(R.id.user_payment_item);
+            TextView userSumguestItem = (TextView) convertView.findViewById(R.id.user_sumguest_item);
+            TextView userSumbillItem = (TextView) convertView.findViewById(R.id.user_sumbill_item);
+
+
             Double bill = stringToDouble(field.getBillCount());
             Double guest = stringToDouble(field.getGuestCount());
             Double payment = stringToDouble(field.getPayment());
             Double sumGuest = stringToDouble(field.getSumGuest());
             Double sumBill = stringToDouble(field.getSumBill());
+
 
             billTotal = billTotal + bill;
             guestTotal = guestTotal + guest;
@@ -810,20 +949,18 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             sumGuestTotal = sumGuestTotal + sumGuest;
             sumBillTotal = sumBillTotal + sumBill;
 
-            Boolean showTitle = false;
-
             if (id == null) {
-                showTitle = true;
-            }else {
+                userCap.setVisibility(View.VISIBLE);
+                userTitle.setText(field.getBaseExternalName());
+            } else {
                 if (!field.getBaseExternalID().equals(id)) {
-                    showTitle = true;
+                    userCap.setVisibility(View.VISIBLE);
+                    userTitle.setText(field.getBaseExternalName());
                     billItem = 0.0;
                     guestItem = 0.0;
                     paymentItem = 0.0;
                     sumGuestItem = 0.0;
                     sumBillItem = 0.0;
-                } else {
-                    fieldOld.setShowTotal(false);
                 }
             }
 
@@ -833,46 +970,50 @@ public class SummaryStaticFragment extends Fragment implements FragmentStartSync
             sumGuestItem = sumGuestItem + sumGuest;
             sumBillItem = sumBillItem + sumBill;
 
-            ItemField itemField = new ItemField(field.getBaseExternalName(),
-                    field.getUserName(),
-                    "",
-                    bill,
-                    guest,
-                    payment,
-                    sumGuest,
-                    sumBill,
-                    billItem,
-                    guestItem,
-                    paymentItem,
-                    sumGuestItem,
-                    sumBillItem,
-                    showTitle,
-                    true);
+            userName.setText(field.getUserName());
+            userBills.setText(field.getBillCount());
+            userGuests.setText(field.getGuestCount());
+            userPayment.setText(field.getPayment());
+            userSumbill.setText(field.getSumGuest());
+            userSumguest.setText(field.getSumBill());
 
-            itemFields.add(itemField);
 
+            Field nextField;
+            try {
+                nextField = fields.get(fields.indexOf(field)+1);
+            } catch (Exception e) {
+                nextField = null;
+            }
+
+            if (nextField == null || !field.getBaseExternalID().equals(nextField.getBaseExternalID())) {
+
+                userTotal.setVisibility(View.VISIBLE);
+                userNameItem.setText(getActivity().getString(R.string.by) + " " + field.getBaseExternalName());
+                userBillsItem.setText(
+                        precision.format(billItem).replace(".", ","));
+                userGuestsItem.setText(
+                        precision.format(guestItem).replace(".", ","));
+                userPaymentItem.setText(
+                        precision.format(paymentItem).replace(".", ","));
+                userSumguestItem.setText(
+                        precision.format(sumGuestItem).replace(".", ","));
+                userSumbillItem.setText(
+                        precision.format(sumBillItem).replace(".", ","));
+            }
             id = field.getBaseExternalID();
-
-            fieldOld = itemField;
-
+            usercapContent.addView(convertView);
         }
 
-
-        UserAdapter adapter = new UserAdapter(getActivity(), itemFields);
-        ListView listView = (ListView) view.findViewById(R.id.usercap_content);
-        listView.setAdapter(adapter);
-
-        TextView usercapBillsTotal = (TextView) view.findViewById(R.id.usercap_bills_total);
-        usercapBillsTotal.setText(precision.format(billTotal).replace(".",","));
-        TextView usercapGuestsTotal = (TextView) view.findViewById(R.id.usercap_guests_total);
-        usercapGuestsTotal.setText(precision.format(guestTotal).replace(".",","));
-        TextView usercapPaymentTotal = (TextView) view.findViewById(R.id.usercap_payment_total);
-        usercapPaymentTotal.setText(precision.format(paymentTotal).replace(".",","));
-        TextView usercapSumguestTotal = (TextView) view.findViewById(R.id.usercap_sumguest_total);
-        usercapSumguestTotal.setText(precision.format(sumGuestTotal).replace(".",","));
-        TextView usercapSumbillTotal = (TextView) view.findViewById(R.id.usercap_sumbill_total);
-        usercapSumbillTotal.setText(precision.format(sumBillTotal).replace(".",","));
-
+            TextView usercapBillsTotal = (TextView) view.findViewById(R.id.usercap_bills_total);
+            usercapBillsTotal.setText(precision.format(billTotal).replace(".", ","));
+            TextView usercapGuestsTotal = (TextView) view.findViewById(R.id.usercap_guests_total);
+            usercapGuestsTotal.setText(precision.format(guestTotal).replace(".", ","));
+            TextView usercapPaymentTotal = (TextView) view.findViewById(R.id.usercap_payment_total);
+            usercapPaymentTotal.setText(precision.format(paymentTotal).replace(".", ","));
+            TextView usercapSumguestTotal = (TextView) view.findViewById(R.id.usercap_sumguest_total);
+            usercapSumguestTotal.setText(precision.format(sumGuestTotal).replace(".", ","));
+            TextView usercapSumbillTotal = (TextView) view.findViewById(R.id.usercap_sumbill_total);
+            usercapSumbillTotal.setText(precision.format(sumBillTotal).replace(".", ","));
 
     }
 

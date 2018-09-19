@@ -110,12 +110,11 @@
 
         </LinearLayout>
 
-        <ua.com.servio.statisticservio.ui.widget.NonScrollListView
+        <LinearLayout
             android:id="@+id/hallcap_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@null"
-            android:layout_marginBottom="5dp"/>
+            android:orientation="vertical"/>
 
         <LinearLayout
             android:layout_width="match_parent"
