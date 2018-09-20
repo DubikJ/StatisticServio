@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <RelativeLayout
+        android:id="@+id/salesitemcap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/salesitemcap_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            app:srcCompat="@drawable/ic_arrow_right"
+            tools:ignore="VectorDrawableCompat"/>
+
+        <TextView
+            android:id="@+id/salesitemcap_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="2dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_standart"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/salesitemcap_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/salesitemcap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"/>
+
+        </ScrollView>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:text="@string/total"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <TextView
+                android:id="@+id/salesitemcap_amount_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.1"
+                android:gravity="right"
+                android:text="@string/zero"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <TextView
+                android:id="@+id/salesitemcap_subtotal_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.1"
+                android:gravity="right"
+                android:text="@string/zero"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <TextView
+                android:id="@+id/salesitemcap_discount_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.1"
+                android:gravity="right"
+                android:text="@string/zero"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <TextView
+                android:id="@+id/salesitemcap_basetotal_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.15"
+                android:gravity="right"
+                android:text="@string/zero"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+            <TextView
+                android:id="@+id/salesitemcap_tax1_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.15"
+                android:gravity="right"
+                android:text="@string/zero"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_table_standart"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

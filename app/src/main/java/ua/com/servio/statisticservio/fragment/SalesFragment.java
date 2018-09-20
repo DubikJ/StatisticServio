@@ -6,11 +6,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -24,6 +29,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ua.com.servio.statisticservio.R;
 import ua.com.servio.statisticservio.activity.BasicActivity;
+import ua.com.servio.statisticservio.adapter.SalesAdapter;
 import ua.com.servio.statisticservio.model.json.Band;
 import ua.com.servio.statisticservio.model.json.DownloadResponse;
 import ua.com.servio.statisticservio.model.json.Field;
@@ -44,8 +50,10 @@ public class SalesFragment extends Fragment implements FragmentStartSync{
     private NetworkUtils networkUtils;
     private ProgressDialog dialogLoad;
     private View view;
-    private LinearLayout content;
-    private TextView noDataView;
+    private LinearLayout content, salescapContent;
+    private TextView noDataView, salesAmountTotal, salesSubtotalTotal,
+            salesDiscountTotal, salesBasetotalTotal, salesTax1Total;
+
     private List<Field> salesFields;
 
     private DecimalFormat precision = new DecimalFormat("#.##");
@@ -81,7 +89,15 @@ public class SalesFragment extends Fragment implements FragmentStartSync{
 
     private void initStartData(){
 
+
         inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        salescapContent = (LinearLayout) view.findViewById(R.id.salescap_content);
+
+        salesAmountTotal = (TextView) view.findViewById(R.id.salesitemcap_amount_total);
+        salesSubtotalTotal = (TextView) view.findViewById(R.id.salesitemcap_subtotal_total);
+        salesDiscountTotal = (TextView) view.findViewById(R.id.salesitemcap_discount_total);
+        salesBasetotalTotal = (TextView) view.findViewById(R.id.salesitemcap_basetotal_total);
+        salesTax1Total = (TextView) view.findViewById(R.id.salesitemcap_tax1_total);
     }
 
     @Override
@@ -189,120 +205,129 @@ public class SalesFragment extends Fragment implements FragmentStartSync{
 
     private void initData(List<Field> fields){
 
-//        LinearLayout hallcapContent = (LinearLayout) view.findViewById(R.id.hallcap_content);
-//
-//        Double billItem = 0.0;
-//        Double guestItem = 0.0;
-//        Double paymentItem = 0.0;
-//        Double sumGuestItem = 0.0;
-//        Double sumBillItem = 0.0;
-//        Double billTotal = 0.0;
-//        Double guestTotal = 0.0;
-//        Double paymentTotal = 0.0;
-//        Double sumGuestTotal = 0.0;
-//        Double sumBillTotal = 0.0;
-//
-//        String id = null;
-//
-//        for(Field field : fields) {
-//
-//            View convertView = inflater.inflate(R.layout.hall_item, null);
-//
-//            LinearLayout hallCap = (LinearLayout) convertView.findViewById(R.id.hall_cap);
-//            TextView hallTitle = (TextView) convertView.findViewById(R.id.hall_title);
-//            TextView hallName = (TextView) convertView.findViewById(R.id.hall_name);
-//            TextView hallBills = (TextView) convertView.findViewById(R.id.hall_bills);
-//            TextView hallGuests = (TextView) convertView.findViewById(R.id.hall_guests);
-//            TextView hallPayment = (TextView) convertView.findViewById(R.id.hall_payment);
-//            TextView hallSumbill = (TextView) convertView.findViewById(R.id.hall_sumbill);
-//            TextView hallSumguest = (TextView) convertView.findViewById(R.id.hall_sumguest);
-//
-//            LinearLayout sectionTotal = (LinearLayout) convertView.findViewById(R.id.hall_total);
-//            TextView hallNameItem = (TextView) convertView.findViewById(R.id.hall_name_item);
-//            TextView hallBillsItem = (TextView) convertView.findViewById(R.id.hall_bills_item);
-//            TextView hallGuestsItem  = (TextView) convertView.findViewById(R.id.hall_guests_item);
-//            TextView hallPaymentItem  = (TextView) convertView.findViewById(R.id.hall_payment_item);
-//            TextView hallSumguestItem  = (TextView) convertView.findViewById(R.id.hall_sumguest_item);
-//            TextView hallSumbillItem  = (TextView) convertView.findViewById(R.id.hall_sumbill_item);
-//
-//            Double bill = stringToDouble(field.getBillCount());
-//            Double guest = stringToDouble(field.getGuestCount());
-//            Double payment = stringToDouble(field.getPayment());
-//            Double sumGuest = stringToDouble(field.getSumGuest());
-//            Double sumBill = stringToDouble(field.getSumBill());
-//
-//            billTotal = billTotal + bill;
-//            guestTotal = guestTotal + guest;
-//            paymentTotal = paymentTotal + payment;
-//            sumGuestTotal = sumGuestTotal + sumGuest;
-//            sumBillTotal = sumBillTotal + sumBill;
-//
-//            if (id == null) {
-//                hallCap.setVisibility(View.VISIBLE);
-//                hallTitle.setText(field.getBaseExternalName());
-//            } else {
-//                if (!field.getBaseExternalID().equals(id)) {
-//                    hallCap.setVisibility(View.VISIBLE);
-//                    hallTitle.setText(field.getBaseExternalName());
-//                    billItem = 0.0;
-//                    guestItem = 0.0;
-//                    paymentItem = 0.0;
-//                    sumGuestItem = 0.0;
-//                    sumBillItem = 0.0;
-//                }
-//            }
-//
-//            billItem = billItem + bill;
-//            guestItem = guestItem + guest;
-//            paymentItem = paymentItem + payment;
-//            sumGuestItem = sumGuestItem + sumGuest;
-//            sumBillItem = sumBillItem + sumBill;
-//
-//            hallName.setText(field.getPlaceGroupShort());
-//            hallBills.setText(field.getBillCount());
-//            hallGuests.setText(field.getGuestCount());
-//            hallPayment.setText(field.getPayment());
-//            hallSumbill.setText(field.getSumGuest());
-//            hallSumguest.setText(field.getSumBill());
-//
-//
-//            Field nextField;
-//            try {
-//                nextField = fields.get(fields.indexOf(field)+1);
-//            } catch (Exception e) {
-//                nextField = null;
-//            }
-//
-//            if (nextField == null || !field.getBaseExternalID().equals(nextField.getBaseExternalID())) {
-//
-//                sectionTotal.setVisibility(View.VISIBLE);
-//                hallNameItem.setText(getActivity().getString(R.string.by)+" " + field.getBaseExternalName());
-//                hallBillsItem.setText(
-//                        precision.format(billItem).replace(".",","));
-//                hallGuestsItem.setText(
-//                        precision.format(guestItem).replace(".",","));
-//                hallPaymentItem.setText(
-//                        precision.format(paymentItem).replace(".",","));
-//                hallSumguestItem.setText(
-//                        precision.format(sumGuestItem).replace(".",","));
-//                hallSumbillItem.setText(
-//                        precision.format(sumBillItem).replace(".",","));
-//            }
-//            id = field.getBaseExternalID();
-//            hallcapContent.addView(convertView);
-//        }
-//
-//        TextView hallcapBillsTotal = (TextView) view.findViewById(R.id.hallcap_bills_total);
-//        hallcapBillsTotal.setText(precision.format(billTotal).replace(".",","));
-//        TextView hallcapGuestsTotal = (TextView) view.findViewById(R.id.hallcap_guests_total);
-//        hallcapGuestsTotal.setText(precision.format(guestTotal).replace(".",","));
-//        TextView hallcapPaymentTotal = (TextView) view.findViewById(R.id.hallcap_payment_total);
-//        hallcapPaymentTotal.setText(precision.format(paymentTotal).replace(".",","));
-//        TextView hallcapSumguestTotal = (TextView) view.findViewById(R.id.hallcap_sumguest_total);
-//        hallcapSumguestTotal.setText(precision.format(sumGuestTotal).replace(".",","));
-//        TextView hallcapSumbillTotal = (TextView) view.findViewById(R.id.hallcap_sumbill_total);
-//        hallcapSumbillTotal.setText(precision.format(sumBillTotal).replace(".",","));
+        salescapContent.removeAllViews();
 
+        Double amountItem = 0.0;
+        Double subTotalItem = 0.0;
+        Double discountItem = 0.0;
+        Double baseTotalItem = 0.0;
+        Double taxItem = 0.0;
+
+        Double amountTotal = 0.0;
+        Double subTotalTotal = 0.0;
+        Double discountTotal = 0.0;
+        Double baseTotalTotal = 0.0;
+        Double taxTotal = 0.0;
+
+        List<Field> fieldList = new ArrayList<>();
+
+        for(Field field : fields) {
+
+            Double amount = stringToDouble(field.getAmount());
+            Double subTotal = stringToDouble(field.getSubTotal());
+            Double discount = stringToDouble(field.getDiscount());
+            Double baseTotal = stringToDouble(field.getBaseTotal());
+            Double tax = stringToDouble(field.getTax1());
+
+            amountTotal = amountTotal + amount;
+            subTotalTotal = subTotalTotal + subTotal;
+            discountTotal = discountTotal + discount;
+            baseTotalTotal = baseTotalTotal + baseTotal;
+            taxTotal = taxTotal + tax;
+
+            amountItem = amountItem + amount;
+            subTotalItem = subTotalItem + subTotal;
+            discountItem = discountItem + discount;
+            baseTotalItem = baseTotalItem + baseTotal;
+            taxItem = taxItem + tax;
+
+
+            fieldList.add(field);
+
+            Field nextField;
+            try {
+                nextField = fields.get(fields.indexOf(field)+1);
+            } catch (Exception e) {
+                nextField = null;
+            }
+
+            if (nextField == null || !field.getBaseExternalID().equals(nextField.getBaseExternalID())) {
+
+                showDataItem(field.getBaseExternalName(), fieldList,
+                        amountItem, subTotalItem, discountItem, baseTotalItem, taxItem);
+
+                amountItem = 0.0;
+                subTotalItem = 0.0;
+                discountItem = 0.0;
+                baseTotalItem = 0.0;
+                taxItem = 0.0;
+
+                fieldList.clear();
+
+            }
+
+        }
+
+        salesAmountTotal.setText(precision.format(amountTotal).replace(".",","));
+        salesSubtotalTotal.setText(precision.format(subTotalTotal).replace(".",","));
+        salesDiscountTotal.setText(precision.format(discountTotal).replace(".",","));
+        salesBasetotalTotal.setText(precision.format(baseTotalTotal).replace(".",","));
+        salesTax1Total.setText(precision.format(taxTotal).replace(".",","));
+
+
+
+    }
+
+    private void showDataItem(String title, List<Field> fields,
+                              Double amountItem, Double subTotalItem,
+                              Double discountItem, Double baseTotalItem, Double taxItem){
+
+        View convertView = inflater.inflate(R.layout.sales_content, null);
+
+        RelativeLayout salesCap = (RelativeLayout) convertView.findViewById(R.id.salesitemcap);
+        final ImageView salesCapImage = (ImageView) convertView.findViewById(R.id.salesitemcap_image);
+        final LinearLayout salesCapContainer = (LinearLayout) convertView.findViewById(R.id.salesitemcap_container);
+
+        salesCap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(salesCapContainer.getVisibility()==View.VISIBLE){
+                    salesCapContainer.setVisibility(View.GONE);
+                    salesCapImage.setImageDrawable(
+                            getActivity().getResources().getDrawable(R.drawable.ic_arrow_right));
+                }else{
+                    salesCapContainer.setVisibility(View.VISIBLE);
+                    salesCapImage.setImageDrawable(
+                            getActivity().getResources().getDrawable(R.drawable.ic_arrow_down));
+
+                }
+            }
+        });
+
+        TextView salesitemCapTitle = (TextView) convertView.findViewById(R.id.salesitemcap_title);
+        salesitemCapTitle.setText(title);
+
+        RecyclerView salesContent = (RecyclerView) convertView.findViewById(R.id.salesitemcap_content);
+        salesContent.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        salesContent.setItemAnimator(new DefaultItemAnimator());
+        salesContent.setHasFixedSize(true);
+
+        SalesAdapter adapter = new SalesAdapter(getActivity(), fields);
+        salesContent.setAdapter(adapter);
+
+        TextView salesAmountItem = (TextView) convertView.findViewById(R.id.salesitemcap_amount_item);
+        TextView salesSubtotalItem = (TextView) convertView.findViewById(R.id.salesitemcap_subtotal_item);
+        TextView salesDiscountItem = (TextView) convertView.findViewById(R.id.salesitemcap_discount_item);
+        TextView salesBasetotalItem = (TextView) convertView.findViewById(R.id.salesitemcap_basetotal_item);
+        TextView salesTax1Item = (TextView) convertView.findViewById(R.id.salesitemcap_tax1_item);
+
+        salesAmountItem.setText(precision.format(amountItem).replace(".",","));
+        salesSubtotalItem.setText(precision.format(subTotalItem).replace(".",","));
+        salesDiscountItem.setText(precision.format(discountItem).replace(".",","));
+        salesBasetotalItem.setText(precision.format(baseTotalItem).replace(".",","));
+        salesTax1Item.setText(precision.format(taxItem).replace(".",","));
+
+        salescapContent.addView(convertView);
 
     }
 
